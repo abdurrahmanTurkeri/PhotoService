@@ -3,6 +3,7 @@ package com.fetva.types;
 
 import java.io.Serializable;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.eclipse.persistence.nosql.annotations.Field;
@@ -28,6 +29,9 @@ public class FetvaCategory implements Serializable{
     private int categoryOrder;
     
     private int categoryRate; 
+    
+    @Embedded
+    private SiteUser createdUser;
     
 
     public String getId() {
@@ -68,6 +72,14 @@ public class FetvaCategory implements Serializable{
 
     public void setCategoryRate(int categoryRate) {
         this.categoryRate = categoryRate;
+    }
+
+    public SiteUser getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(SiteUser createdUser) {
+        this.createdUser = createdUser;
     }
     
     
