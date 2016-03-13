@@ -8,23 +8,26 @@ package com.fetva.types;
 import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import org.eclipse.persistence.nosql.annotations.Field;
 import org.eclipse.persistence.nosql.annotations.NoSql;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author abdurrahmanturkeri
  */
-
-@Embeddable
-@NoSql
+@Table(name = "Question")
+@Entity
 public class Question implements Serializable{
     
     @Id
-    @GeneratedValue
-    @Field(name = "_id")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     
     private String questionText;
@@ -35,7 +38,7 @@ public class Question implements Serializable{
     //TODO:lookup ile bu data valide edilmeli ve sayfaya getirilmeli 
     private String questionSourceType;
     
-    @Embedded
+    @OneToOne
     private SiteUser createdUser;
     
     

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/mainTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+
+   <ui:define name="content">
+       <p:growl id="messages" showDetail="true"  />
+        <p:fieldset>
+        <h:form id="insertForm" enctype="multipart/form-data">
+           
+                <div class="formRowBasic width70">
+                    <div class="formLabel width40">        
+                        <p:outputLabel id="urlLabel" for="urlInput" value="Url Adresi  "/>
+                    </div>
+                    <div class="formInput width50">
+                        <p:inputText placeholder="URL   adresini giriniz " value="#{mediaManagedBean.media.url}" id="urlInput"
+                                    />
+                    </div>
+                </div>
+                
+                <div class="formRowBasic width70">
+                    <div class="formLabel width40">        
+                        <p:outputLabel id="nameLabel" for="nameInput" value="İsim  "/>
+                    </div>
+                    <div class="formInput width50">
+                        <p:inputText placeholder="Dosya İsmi  giriniz" value="#{mediaManagedBean.media.name}" id="nameInput"
+                                    />
+                    </div>
+                </div>
+                
+                <div class="formRowBasic width70">
+                    <div class="formLabel width40">        
+                        <p:outputLabel id="fileLabel" value="Dosya Seçiniz  "/>
+                    </div>
+                    <div class="formInput width50">
+                        <p:fileUpload fileUploadListener="#{mediaManagedBean.handleFileUpload}"
+                                      mode="advanced" 
+                                      sizeLimit="100000" />
+ 
+                       
+                        
+                        
+                    </div>
+                </div>
+                
+              
+                <div class="formRowBasic width90">
+                    <div class="formLabel width70"></div>
+                    <div class="formInput width20">
+                        <p:commandButton action="#{mediaManagedBean.saveMedia()}" value="Dosyayı Kaydet" update=":fileList"/>
+                    </div>
+                </div>
+          
+        </h:form>
+  </p:fieldset>
+       <p:dataTable resizableColumns="true" id="fileList" var="media" value="#{mediaManagedBean.mediaList}">
+           <p:column headerText="Email Adresi">#{media.name}</p:column>
+           <p:column headerText="İsim  ">#{media.type}</p:column>
+           <p:column headerText="Soyisim">#{media.url}</p:column>
+           <p:column headerText="Telefon">#{user.mobilePhone}</p:column>
+           <p:column headerText="İşlemler">
+               
+               <p:button onclick="" value="Görüntüle"/>
+               
+           </p:column>
+           
+         
+        </p:dataTable>
+
+       
+
+    </ui:define>
+
+</ui:composition>

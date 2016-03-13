@@ -1,52 +1,48 @@
-
 package com.fetva.types;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-import org.eclipse.persistence.nosql.annotations.Field;
-import org.eclipse.persistence.nosql.annotations.NoSql;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author abdurrahmanturkeri
  */
 
-@Embeddable
-@NoSql
-public class Fetva implements Serializable{
+@Entity
+public class Fetva implements Serializable {
+
     @Id
-    @GeneratedValue
-    @Field(name = "_id")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
-    @Embedded
-    @Field(name = "fetvaCategory")
+
+    @ManyToOne
     private FetvaCategory fetvaCategory;
-    
-    @Embedded
-    @Field(name = "question")
+
+    @OneToOne
     private Question question;
-    
+
     private String answer;
-    
+
     /*
     *Fetvanın statusu cevaplandı cevap bekliyor  
-    */
+     */
     //TODO enum ile data lookup yapılacak
-    private int fetvaStatus;
-    
-    
-      /*
+    private boolean fetvaStatus;
+
+    /*
     *Fetvanın yayınlanma statusu   yayınla yayınlama 
-    */
+     */
     //TODO enum ile data lookup yapılacak
-    private int activationStatus;
-    
+    private boolean activationStatus;
+
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date publishDate;
 
@@ -82,19 +78,19 @@ public class Fetva implements Serializable{
         this.answer = answer;
     }
 
-    public int getFetvaStatus() {
+    public boolean getFetvaStatus() {
         return fetvaStatus;
     }
 
-    public void setFetvaStatus(int fetvaStatus) {
+    public void setFetvaStatus(boolean fetvaStatus) {
         this.fetvaStatus = fetvaStatus;
     }
 
-    public int getActivationStatus() {
+    public boolean getActivationStatus() {
         return activationStatus;
     }
 
-    public void setActivationStatus(int activationStatus) {
+    public void setActivationStatus(boolean activationStatus) {
         this.activationStatus = activationStatus;
     }
 
@@ -105,9 +101,5 @@ public class Fetva implements Serializable{
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
     }
-    
-    
-    
-    
-    
+
 }

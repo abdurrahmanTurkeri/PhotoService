@@ -5,23 +5,15 @@
  */
 package com.fetva.service;
 
+import com.fetva.types.FetvaCategory;
 import java.util.List;
 import javax.ejb.Local;
-import javax.ejb.Remote;
-import org.hibernate.ogm.demos.ogm101.part1.Person;
 
-
-/**
- *
- * @author abdurrahmanturkeri
- */
 @Local
-public interface DummyServiceLocal {
+public interface FetvaCategoryService extends BaseService{
     
-    public String getData();
+    public void saveCategory(FetvaCategory fetvaCategory) throws Exception;
     
-    public void insertData() throws Exception;
+    public List<FetvaCategory> listOfCategory();
     
-    public List<Person> getListOfPerson();
-        
 }

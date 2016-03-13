@@ -7,17 +7,20 @@ package com.fetva.types;
 
 import java.io.Serializable;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import org.eclipse.persistence.nosql.annotations.Field;
 import org.eclipse.persistence.nosql.annotations.NoSql;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author abdurrahmanturkeri
  */
-@Embeddable
-@NoSql
+@Table(name = "SiteUser")
+@Entity
 public class SiteUser implements Serializable {
 
     public SiteUser(String id, String userName, String firstName, String lastName, String email, String mobilePhone) {
@@ -35,24 +38,20 @@ public class SiteUser implements Serializable {
 
     public SiteUser() {
     }
-    
-    
-    
-    
 
     @Id
-    @GeneratedValue
-    @Field(name = "_id")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
+
     private String userName;
-    
+
     private String firstName;
-    
+
     private String lastName;
-    
+
     private String email;
-    
+
     private String mobilePhone;
 
     public String getId() {
@@ -102,6 +101,5 @@ public class SiteUser implements Serializable {
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
     }
-    
-    
+
 }

@@ -2,24 +2,32 @@
 package com.fetva.types;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import org.eclipse.persistence.nosql.annotations.Field;
 import org.eclipse.persistence.nosql.annotations.NoSql;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author abdurrahmanturkeri
  */
 
-@Embeddable
-@NoSql
+@Entity(name = "FetvaCategory")
+@Table(name = "FetvaCategory")
 public class FetvaCategory implements Serializable{
     @Id
-    @GeneratedValue
-    @Field(name = "_id")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     
     private String name;
@@ -30,7 +38,10 @@ public class FetvaCategory implements Serializable{
     
     private int categoryRate; 
     
-    @Embedded
+    @OneToMany(mappedBy = "fetvaCategory",cascade = CascadeType.PERSIST)
+    private List<Fetva> fetvalist;
+    
+    @OneToOne
     private SiteUser createdUser;
     
 
@@ -80,6 +91,14 @@ public class FetvaCategory implements Serializable{
 
     public void setCreatedUser(SiteUser createdUser) {
         this.createdUser = createdUser;
+    }
+
+    public List<Fetva> getFetvalist() {
+        return fetvalist;
+    }
+
+    public void setFetvalist(List<Fetva> fetvalist) {
+        this.fetvalist = fetvalist;
     }
     
     

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view>
+        <h:form>
+            <p:menu>
+                <p:submenu label="Fetva ">
+                    <p:menuitem value="Fetva Girişi"  url="/fetva/fetvaActions.jsf"  icon="ui-icon-disk" />
+                    <p:menuitem value="Fetva Listesi" url="/fetva/fetvaList.jsf" icon="ui-icon-arrowrefresh-1-w"/>
+                </p:submenu>
+                <p:submenu label="Fetva Kategori Yönetimi">
+                    <p:menuitem value="Kategori İşlemleri" url="/fetvaCategory/fetvaCategoryActions.xhtml"  icon="ui-icon-close"/>
+                </p:submenu>
+                <p:submenu label="Kullanıcı Girişi">
+                    <p:menuitem value="Kullanıcı İşlemleri"  url="/user/userActions.jsf" icon="ui-icon-close"/>
+                </p:submenu>
+                <p:submenu label="Dosya İşlemleri">
+                    <p:menuitem value="Dosya Yükleme" url="/media/mediaActions.xhtml"  icon="ui-icon-close"/>
+                </p:submenu>
+                <p:submenu label="Soru İşlemleri">
+                    <p:menuitem value="Soru Girişi" url="/question/questionInsert.xhtml"  icon="ui-icon-close"/>
+                </p:submenu>
+            </p:menu>
+        </h:form>
+    </f:view>
+
+</html>

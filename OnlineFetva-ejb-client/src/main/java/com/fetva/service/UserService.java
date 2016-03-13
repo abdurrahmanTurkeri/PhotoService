@@ -5,23 +5,15 @@
  */
 package com.fetva.service;
 
+import com.fetva.types.SiteUser;
 import java.util.List;
 import javax.ejb.Local;
-import javax.ejb.Remote;
-import org.hibernate.ogm.demos.ogm101.part1.Person;
 
-
-/**
- *
- * @author abdurrahmanturkeri
- */
 @Local
-public interface DummyServiceLocal {
+public interface UserService {
     
-    public String getData();
+    public void saveUser(SiteUser siteUser) throws Exception;
     
-    public void insertData() throws Exception;
+    public List<SiteUser> listOfUser();
     
-    public List<Person> getListOfPerson();
-        
 }
