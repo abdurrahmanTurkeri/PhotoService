@@ -5,17 +5,20 @@
  */
 package com.fetva.service;
 
-import com.fetva.types.Question;
+import com.fetva.types.Fetva;
+
 import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface QuestionService {
+public interface FetvaService extends BaseService{
     
-    public void saveQuestion(Question question) throws Exception;
+    public void saveFetva(Fetva fetva) throws Exception;
     
-    public List<Question> listOfQuestion();
+    public List<Fetva> listOfFetva();
     
-    public void deleteQuestion(Question question);
+    public List<Fetva> listOfFetvaByCategory(String categoryId);
+    
+    public void deleteFetva(Fetva fetva);
     
 }

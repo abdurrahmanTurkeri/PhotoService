@@ -53,6 +53,7 @@
 
         <p:dataTable resizableColumns="true" id="categoryList" var="category" value="#{categoryManagedBean.categoryList}" rowKey="#{category.categoryRate}" selection="#{categoryManagedBean.selectedCategory}" selectionMode="single">
             <p:ajax event="rowDblselect" listener="#{categoryManagedBean.fillSelectedCategory(category)}" update=":insertForm"/>
+            <p:column headerText="Id" style="width: 100px;">#{category.id}</p:column>
             <p:column headerText="İsim">#{category.name}</p:column>
             <p:column headerText="Etiket ">#{category.label}</p:column>
             <p:column headerText="Kategori Sıra">#{category.categoryOrder}</p:column>

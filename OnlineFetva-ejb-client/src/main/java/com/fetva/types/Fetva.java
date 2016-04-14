@@ -1,20 +1,28 @@
 package com.fetva.types;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author abdurrahmanturkeri
  */
-
+@XmlRootElement(name = "fetva")
 @Entity
 public class Fetva implements Serializable {
 
@@ -23,13 +31,17 @@ public class Fetva implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @ManyToOne
+    @XmlTransient
+    @ManyToOne(fetch = FetchType.EAGER)
     private FetvaCategory fetvaCategory;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Question question;
 
-    private String answer;
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+    private List<Answer> answerList;
+    
+    private String fetvaCategoryId;
 
     /*
     *Fetvanın statusu cevaplandı cevap bekliyor  
@@ -70,14 +82,6 @@ public class Fetva implements Serializable {
         this.question = question;
     }
 
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
     public boolean getFetvaStatus() {
         return fetvaStatus;
     }
@@ -101,5 +105,28 @@ public class Fetva implements Serializable {
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
     }
+
+    public List<Answer> getAnswerList() {
+        if(answerList==null){
+           answerList=new ArrayList<>();
+        }
+        return answerList;
+    }
+
+    public void setAnswerList(List<Answer> answerList) {
+        this.answerList = answerList;
+    }
+
+    public String getFetvaCategoryId() {
+        return fetvaCategoryId;
+    }
+
+    public void setFetvaCategoryId(String fetvaCategoryId) {
+        this.fetvaCategoryId = fetvaCategoryId;
+    }
+    
+    
+    
+    
 
 }

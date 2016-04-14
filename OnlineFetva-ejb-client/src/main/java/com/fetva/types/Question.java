@@ -41,6 +41,8 @@ public class Question implements Serializable{
     @OneToOne
     private SiteUser createdUser;
     
+    private String questionTitle;
+    
     
 
     public String getId() {
@@ -73,6 +75,14 @@ public class Question implements Serializable{
 
     public void setCreatedUser(SiteUser createdUser) {
         this.createdUser = createdUser;
+    }
+
+    public String getQuestionTitle() {
+        return questionTitle;
+    }
+
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
     }
     
     

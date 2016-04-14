@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -15,7 +16,17 @@
 
 
         <div id="top" class="top">
-            <ui:insert name="top">Fetva Yönetim paneli</ui:insert>
+            <ui:insert name="top">
+                <div style="display: inline-block;" class="width100">
+                    <div  class="width80" style="display: inline-block">
+                    Fetva Yönetim paneli
+                    </div>
+                    <div  style="display: inline-block;width: 18%;text-align:  right" >
+                        <p:commandButton actionListener="#{loginManagedBean.logout()}" icon="ui-icon-suitcase"  value="Çıkış"/>
+                    </div>
+                    
+                </div>
+            </ui:insert>
         </div>
         <div>
             <div id="left">

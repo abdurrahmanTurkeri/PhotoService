@@ -13,11 +13,13 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlTransient;
 import org.eclipse.persistence.nosql.annotations.Field;
 import org.eclipse.persistence.nosql.annotations.NoSql;
 import org.hibernate.annotations.GenericGenerator;
@@ -37,12 +39,12 @@ public class Answer implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date answerDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     private SiteUser answeredUser;
 
     private String answerText;
-
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @XmlTransient
+    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private List<Media> mediaList;
 
     public String getId() {

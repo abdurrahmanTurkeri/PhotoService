@@ -55,4 +55,21 @@ public class QuestionServiceImpl implements QuestionService {
         return questionList;
     }
 
+    @Override
+    public void deleteQuestion(Question question) {
+        try {
+
+            emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
+            entityManager = emf.createEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.remove(question);
+            entityManager.getTransaction().commit();
+            entityManager.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    
+    }
+
 }

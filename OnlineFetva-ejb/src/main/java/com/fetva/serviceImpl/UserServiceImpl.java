@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Dependent
 @Stateless
@@ -54,6 +55,27 @@ public class UserServiceImpl implements UserService {
         }
         return siteUserList;
 
+    }
+
+    @Override
+    public SiteUser LoadUser(String userName, String password) {
+       SiteUser siteUser=new SiteUser();
+        try {
+            emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
+            entityManager = emf.createEntityManager();
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createQuery("select a from SiteUser a where a.userName=:param1 and a.password=:param2");
+            query.setParameter("param1",userName);
+            query.setParameter("param2",password);
+            siteUser=(SiteUser)query.getSingleResult();
+            entityManager.getTransaction().commit();
+            entityManager.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return siteUser;
+    
     }
 
 }

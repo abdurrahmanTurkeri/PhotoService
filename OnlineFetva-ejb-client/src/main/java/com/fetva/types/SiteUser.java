@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.eclipse.persistence.nosql.annotations.Field;
 import org.eclipse.persistence.nosql.annotations.NoSql;
 import org.hibernate.annotations.GenericGenerator;
@@ -53,6 +54,11 @@ public class SiteUser implements Serializable {
     private String email;
 
     private String mobilePhone;
+    
+    private String password;
+    
+    @Transient
+    private String passwordMatch;
 
     public String getId() {
         return id;
@@ -101,5 +107,25 @@ public class SiteUser implements Serializable {
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordMatch() {
+        return passwordMatch;
+    }
+
+    public void setPasswordMatch(String passwordMatch) {
+        this.passwordMatch = passwordMatch;
+    }
+    
+    
+    
+    
 
 }

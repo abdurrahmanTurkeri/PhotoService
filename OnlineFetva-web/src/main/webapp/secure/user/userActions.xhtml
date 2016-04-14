@@ -59,6 +59,26 @@
                     </div>
                 </div>
                 
+                <div class="formRowBasic width70">
+                    <div class="formLabel width40">        
+                        <p:outputLabel id="passwordLabel" for="passwordInput" value="Şifre  "/>
+                    </div>
+                    <div class="formInput width50">
+                        <p:password placeholder="Şifre giriniz" value="#{userManagedBean.siteUser.password}"  match="passwordInputMatch" id="passwordInput"
+                                    />
+                    </div>
+                </div>
+                
+                <div class="formRowBasic width70">
+                    <div class="formLabel width40">        
+                        <p:outputLabel id="passwordLabelMatch" for="passwordInputMatch" value="Şifre Tekrar"/>
+                    </div>
+                    <div class="formInput width50">
+                        <p:password placeholder="Şifre tekrarı giriniz"  
+                                    value="#{userManagedBean.siteUser.passwordMatch}" id="passwordInputMatch"/>
+                    </div>
+                </div>
+                
                 
                
                 <div class="formRowBasic width90">
@@ -76,6 +96,7 @@
            <p:column headerText="Soyisim">#{user.lastName}</p:column>
            <p:column headerText="Telefon">#{user.mobilePhone}</p:column>
            <p:column headerText="Kullanıcı Adı">#{user.userName}</p:column>
+           <p:column headerText="Şifre">#{user.password}</p:column>
            
          
         </p:dataTable>

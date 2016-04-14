@@ -9,12 +9,15 @@ import com.fetva.service.QuestionService;
 import com.fetva.service.UserService;
 import com.fetva.types.Question;
 import com.fetva.types.SiteUser;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 /**
@@ -22,18 +25,20 @@ import javax.inject.Inject;
  * @author abdurrahmanturkeri
  */
 @Named(value = "questionManagedBean")
-@RequestScoped
-public class QuestionManagedBean {
+@ViewScoped
+public class QuestionManagedBean implements Serializable{
 
     @Inject
     QuestionService questionService;
-     @Inject
-     UserService userService;
-     private SiteUser siteUser;
-     private List<SiteUser> userList;
+    @Inject
+    UserService userService;
+    private SiteUser siteUser;
+    private List<SiteUser> userList;
 
-    private Question question=new Question();
+    private Question question = new Question();
     private List<Question> questionList;
+    private Question selectedQuestion=new Question();
+    private Question tmpSelectedQuestion=new Question();
 
     /**
      * Creates a new instance of QuestionManagedBean
@@ -43,11 +48,10 @@ public class QuestionManagedBean {
 
     @PostConstruct
     public void init() {
+        tmpSelectedQuestion=null;
         questionList = questionService.listOfQuestion();
-       userList= userService.listOfUser();
-       if(userList !=null &&  !userList.isEmpty()){
-           siteUser=userList.get(0);
-       }
+         siteUser = (SiteUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("siteUser");
+       
     }
 
     public void saveQuestion() {
@@ -60,6 +64,21 @@ public class QuestionManagedBean {
         }
         questionList = questionService.listOfQuestion();
     }
+    
+     public void deleteQuestion() {
+        try {
+         questionService.deleteQuestion(selectedQuestion);
+        } catch (Exception ex) {
+            Logger.getLogger(QuestionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        questionList = questionService.listOfQuestion();
+    }
+    
+    
+    public void setselctedQuestion(){
+        tmpSelectedQuestion=selectedQuestion;
+    }
+    
 
     public Question getQuestion() {
         return question;
@@ -76,5 +95,25 @@ public class QuestionManagedBean {
     public void setQuestionList(List<Question> questionList) {
         this.questionList = questionList;
     }
+
+    public Question getSelectedQuestion() {
+        return selectedQuestion;
+    }
+
+    public void setSelectedQuestion(Question selectedQuestion) {
+        this.selectedQuestion = selectedQuestion;
+    }
+
+    public Question getTmpSelectedQuestion() {
+        return tmpSelectedQuestion;
+    }
+
+    public void setTmpSelectedQuestion(Question tmpSelectedQuestion) {
+        this.tmpSelectedQuestion = tmpSelectedQuestion;
+    }
+    
+    
+    
+    
 
 }

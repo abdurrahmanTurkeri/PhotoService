@@ -16,4 +16,6 @@ public interface UserService {
     
     public List<SiteUser> listOfUser();
     
+    public SiteUser LoadUser(String userName,String password);
+    
 }
