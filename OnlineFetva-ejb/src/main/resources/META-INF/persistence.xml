@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="fetva_mongo_db_pu" transaction-type="RESOURCE_LOCAL">
+    <description>Online Fetva Hibernate OGM persistence XMl</description>
     <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
-    <class>org.hibernate.ogm.demos.ogm101.part1.Hike</class>
-    <class>org.hibernate.ogm.demos.ogm101.part1.Person</class>
+    
     <class>com.fetva.types.Answer</class>
     <class>com.fetva.types.Fetva</class>
     <class>com.fetva.types.FetvaCategory</class>
@@ -18,8 +18,8 @@
       <property name="hibernate.classloading.use_current_tccl_as_parent" value="false"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="show_sql" value="true"/>
-      
-
     </properties>
+    
   </persistence-unit>
+  
 </persistence>

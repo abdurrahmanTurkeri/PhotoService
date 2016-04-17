@@ -11,7 +11,8 @@ public class ApplicationConfig extends Application{
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources=new HashSet<Class<?>>();
-        resources.add(com.fetva.rest.controller.FetvaRsController.class);        
+        resources.add(com.fetva.rest.controller.FetvaRsController.class);     
+        resources.add(com.fetva.rest.controller.FetvaCategoryRsController.class);     
                
         return resources;
     }
