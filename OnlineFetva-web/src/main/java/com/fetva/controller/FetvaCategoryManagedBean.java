@@ -22,13 +22,13 @@ import javax.inject.Inject;
 @Named(value = "categoryManagedBean")
 @RequestScoped
 public class FetvaCategoryManagedBean {
-    
+
     @Inject
     FetvaCategoryService service;
-    
-    private FetvaCategory fetvaCategory=new FetvaCategory();
+
+    private FetvaCategory fetvaCategory = new FetvaCategory();
     private FetvaCategory selectedCategory;
-    
+
     private List<FetvaCategory> categoryList;
 
     /**
@@ -36,39 +36,45 @@ public class FetvaCategoryManagedBean {
      */
     public FetvaCategoryManagedBean() {
     }
-    
+
     @PostConstruct
-    public void init(){
-       categoryList= service.listOfCategory();
+    public void init() {
+        categoryList = service.listOfCategory();
     }
-    
-    public void saveCategory(){
-        try{
+
+    public void saveCategory() {
+        try {
             service.saveCategory(fetvaCategory);
-        }catch(Exception ex){
-             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(ex.getMessage()));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
         }
-         categoryList= service.listOfCategory();
-        
+        categoryList = service.listOfCategory();
+
     }
-    
-    public void deleteCategory(){
-        
+
+    public void deleteCategory() {
+
+        try {
+            service.deleteCategory(selectedCategory);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));
+
+        }
+
     }
-    
-    public void updateCategory(){
-        
-        
+
+    public void updateCategory() {
+
     }
-    
-    public void showFetvaList(){
-        
+
+    public void showFetvaList() {
+
     }
-    
-    public void fillSelectedCategory(FetvaCategory fetvaCategory){
-        selectedCategory=fetvaCategory;
+
+    public void fillSelectedCategory(FetvaCategory fetvaCategory) {
+        selectedCategory = fetvaCategory;
     }
-    
 
     public FetvaCategory getFetvaCategory() {
         return fetvaCategory;
@@ -93,7 +99,5 @@ public class FetvaCategoryManagedBean {
     public void setSelectedCategory(FetvaCategory selectedCategory) {
         this.selectedCategory = selectedCategory;
     }
-    
-    
-    
+
 }

@@ -16,4 +16,6 @@ public interface FetvaCategoryService extends BaseService{
     
     public List<FetvaCategory> listOfCategory();
     
+    public void deleteCategory(FetvaCategory fetvaCategory) throws Exception ;
+    
 }

@@ -45,31 +45,33 @@
                 <div class="formRowBasic width90">
                     <div class="formLabel width70"></div>
                     <div class="formInput width20">
-                        <p:commandButton action="#{categoryManagedBean.saveCategory()}" value="Kategoriyi Kaydet" update=":categoryList"/>
+                        <p:commandButton action="#{categoryManagedBean.saveCategory()}" value="Kategoriyi Kaydet" update=":insertForm:categoryList"/>
                     </div>
                 </div>
             </p:fieldset>
-        </h:form>
+        
 
-        <p:dataTable resizableColumns="true" id="categoryList" var="category" value="#{categoryManagedBean.categoryList}" rowKey="#{category.categoryRate}" selection="#{categoryManagedBean.selectedCategory}" selectionMode="single">
+        <p:contextMenu for="categoryList">
+            <p:menuitem value="Fetvalar" update=":insertForm:fetvaList" icon="ui-icon-search" actionListener="#{categoryManagedBean.showFetvaList()}" />
+            <p:menuitem value="Sil" update=":insertForm:categoryList" icon="ui-icon-close" actionListener="#{categoryManagedBean.deleteCategory()}"/>
+        </p:contextMenu>
+
+        <p:dataTable resizableColumns="true" id="categoryList" var="category" 
+                     value="#{categoryManagedBean.categoryList}" 
+                     rowKey="#{category.categoryRate}"
+                     selection="#{categoryManagedBean.selectedCategory}" selectionMode="single">
             <p:ajax event="rowDblselect" listener="#{categoryManagedBean.fillSelectedCategory(category)}" update=":insertForm"/>
             <p:column headerText="Id" style="width: 100px;">#{category.id}</p:column>
             <p:column headerText="İsim">#{category.name}</p:column>
             <p:column headerText="Etiket ">#{category.label}</p:column>
             <p:column headerText="Kategori Sıra">#{category.categoryOrder}</p:column>
             <p:column headerText="Önem Seviyesi" >#{category.categoryRate}</p:column>
-            <p:column headerText="İşlemler ">
-
-                <p:commandButton value="Fetva Listesi" actionListener="#{categoryManagedBean.showFetvaList()}" update=":fetvaList"/>
-                <p:commandButton icon="delete" value="Sil" actionListener="#{categoryManagedBean.deleteCategory()}"/>
-
-            </p:column>
-
         </p:dataTable>
 
         <p:dialog id="fetvaList" header="Fetva Listesi">
 
         </p:dialog>
+     </h:form>       
 
     </ui:define>
 

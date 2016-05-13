@@ -9,22 +9,26 @@ import com.fetva.service.FetvaCategoryService;
 import com.fetva.service.FetvaService;
 import com.fetva.types.Fetva;
 import com.fetva.types.FetvaCategory;
+import com.fetva.types.Question;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
  * @author abdurrahmanturkeri
  */
-@Path("/kategori")
+@Path("/soru")
 @RequestScoped
-public class FetvaCategoryRsController {
+public class QuestionRsController {
 
     @Inject
     FetvaCategoryService categoryService;
@@ -32,23 +36,23 @@ public class FetvaCategoryRsController {
     /**
      * Creates a new instance of FetvaRsController
      */
-    public FetvaCategoryRsController() {
+    public QuestionRsController() {
     }
 
     @GET
-    @Path("/kategoriListesi")
+    @Path("/{questionText}/{soranIsim}/{soranNo}")
     @Produces(MediaType.APPLICATION_JSON)
-    public CategoryContainer getFetvaCategoryList() {
+    public Response askQuestion(@PathParam("questionText") String questionText,
+            @PathParam("soranIsim") String soranIsim, @PathParam("soranNo") String soranNo) {
+        WrapperObject wrapperObject=new WrapperObject();
         try {
-            List<FetvaCategory> result = categoryService.listOfCategory();
-
-            CategoryContainer categoryContainer = new CategoryContainer();
-            categoryContainer.setFetvaCategoryList(result);
-            return categoryContainer;
+            wrapperObject.setResult("Sorunuz Alinmistir");
+            return Response.status(200).entity(wrapperObject).build();
 
         } catch (Exception ex) {
+            wrapperObject.setResult("ERROR");
             ex.printStackTrace();
-            return null;
+            return Response.status(500).entity(wrapperObject).build();
         }
     }
 }

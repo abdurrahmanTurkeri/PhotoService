@@ -45,5 +45,15 @@ public class FetvaCategoryServiceImpl implements FetvaCategoryService {
         entityManager.close();
         return categoryList;
     }
+    
+    @Override
+    public void deleteCategory(FetvaCategory fetvaCategory) throws Exception {
+        emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
+        entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.remove(fetvaCategory);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
 
 }

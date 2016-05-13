@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -14,6 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author abdurrahmanturkeri
  */
 
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity(name = "FetvaCategory")
 public class FetvaCategory implements Serializable{
     @Id

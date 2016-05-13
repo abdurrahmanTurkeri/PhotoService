@@ -13,7 +13,7 @@ public class ApplicationConfig extends Application{
         Set<Class<?>> resources=new HashSet<Class<?>>();
         resources.add(com.fetva.rest.controller.FetvaRsController.class);     
         resources.add(com.fetva.rest.controller.FetvaCategoryRsController.class);     
-               
+        resources.add(com.fetva.rest.controller.QuestionRsController.class);          
         return resources;
     }
 
