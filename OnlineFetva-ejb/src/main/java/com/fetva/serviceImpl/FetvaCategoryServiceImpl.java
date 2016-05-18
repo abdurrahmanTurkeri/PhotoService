@@ -11,49 +11,39 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.context.Dependent;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 @Dependent
 @Stateless
-public class FetvaCategoryServiceImpl implements FetvaCategoryService {
+public class FetvaCategoryServiceImpl extends BaseServiceImpl implements FetvaCategoryService {
 
-    EntityManagerFactory emf;
-    EntityManager entityManager;
-
-    // @PersistenceContext
-    //EntityManager entityManager;
     @Override
     public void saveCategory(FetvaCategory fetvaCategory) throws Exception {
-        emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
-        entityManager = emf.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(fetvaCategory);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        em = accessEntityManager();
+        em.getTransaction().begin();
+        em.persist(fetvaCategory);
+        em.getTransaction().commit();
+        em.close();
     }
 
     @Override
     public List<FetvaCategory> listOfCategory() {
-        emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
-        entityManager = emf.createEntityManager();
+        em = accessEntityManager();
         List<FetvaCategory> categoryList = new ArrayList<>();
-        entityManager.getTransaction().begin();
-        categoryList = entityManager.createQuery("from FetvaCategory").getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        em.getTransaction().begin();
+        categoryList = em.createQuery("from FetvaCategory").getResultList();
+        em.getTransaction().commit();
+        em.close();
         return categoryList;
     }
-    
+
     @Override
     public void deleteCategory(FetvaCategory fetvaCategory) throws Exception {
-        emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
-        entityManager = emf.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(fetvaCategory);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        em = accessEntityManager();
+        em.getTransaction().begin();
+        em.remove(em.contains(fetvaCategory) ? fetvaCategory : em.merge(fetvaCategory));
+        em.getTransaction().commit();
+        em.close();
     }
 
 }

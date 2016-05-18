@@ -10,9 +10,9 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface UserService {
+public interface UserService  extends BaseService{
     
-    public void saveUser(SiteUser siteUser) throws Exception;
+    public SiteUser saveUser(SiteUser siteUser) throws Exception;
     
     public List<SiteUser> listOfUser();
     

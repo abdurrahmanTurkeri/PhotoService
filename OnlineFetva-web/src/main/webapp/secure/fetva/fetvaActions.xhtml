@@ -44,11 +44,25 @@
                         <p:outputLabel id="questionLabel" for="questionInput" 
                                        value="Soruyu Seçiniz"/>
                     </div>
+                    
+                    <div class="formInput width60">
+                        <p:selectManyCheckbox  id="custom" value="#{fetvaManagedBean.selectedSourceTypes}" >
+                            <p:ajax event="change" listener="#{fetvaManagedBean.filterQuestions()}"/>
+                            <f:selectItem itemLabel="Web den gelen Sorular" itemValue="FROM_WEB" />
+                            <f:selectItem itemLabel="Mobil den gelen Sorular" itemValue="FROM_MOBILE" />
+                            <f:selectItem itemLabel="Admin Soruları" itemValue="FROM_ADMIN" />
+                        </p:selectManyCheckbox>
+                    </div>
+                    
+                    <div class="width30" style="display: inline-block">
+                        &nbsp;
+                    </div>
                     <div class="formInput width60">
                         <p:selectOneMenu value="#{fetvaManagedBean.fetva.question}" converter="quesionConverter" filter="true"  
                                          filterMatchMode="startsWith"  effect="fade" var="q" style="width:100%" id="questionInput" >
                             
-                            <f:selectItems value="#{fetvaManagedBean.questionList}" var="question"  itemLabel="#{question.questionTitle}"
+                            <f:selectItems value="#{fetvaManagedBean.tempQuestionList}" var="question"  
+                                           itemLabel="#{question.questionTitle}"
                                            itemValue="#{question}"  
                                            /> 
                             <p:column style="width: 20%;">

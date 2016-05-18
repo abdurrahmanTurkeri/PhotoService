@@ -20,22 +20,16 @@ import javax.persistence.Query;
 
 @Dependent
 @Stateless
-public class FetvaServiceImpl implements FetvaService {
+public class FetvaServiceImpl extends BaseServiceImpl implements FetvaService {
 
-    EntityManagerFactory emf;
-    EntityManager entityManager;
-
-    // @PersistenceContext
-    //EntityManager entityManager;
     @Override
     public void saveFetva(Fetva fetva) throws Exception {
         try {
-            emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
-            entityManager = emf.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(fetva);
-            entityManager.getTransaction().commit();
-            entityManager.close();
+            em = accessEntityManager();
+            em.getTransaction().begin();
+            em.persist(fetva);
+            em.getTransaction().commit();
+            em.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -43,13 +37,12 @@ public class FetvaServiceImpl implements FetvaService {
 
     @Override
     public List<Fetva> listOfFetva() {
-        emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
-        entityManager = emf.createEntityManager();
+        em = accessEntityManager();
         List<Fetva> fetvaList = new ArrayList<>();
-        entityManager.getTransaction().begin();
-        fetvaList = entityManager.createQuery("from Fetva").getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        em.getTransaction().begin();
+        fetvaList = em.createQuery("from Fetva").getResultList();
+        em.getTransaction().commit();
+        em.close();
         return fetvaList;
     }
 
@@ -58,12 +51,11 @@ public class FetvaServiceImpl implements FetvaService {
 
         try {
 
-            emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
-            entityManager = emf.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.remove(fetva);
-            entityManager.getTransaction().commit();
-            entityManager.close();
+            em = accessEntityManager();
+            em.getTransaction().begin();
+            em.remove(fetva);
+            em.getTransaction().commit();
+            em.close();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -73,16 +65,28 @@ public class FetvaServiceImpl implements FetvaService {
 
     @Override
     public List<Fetva> listOfFetvaByCategory(String categoryId) {
-        emf = Persistence.createEntityManagerFactory("fetva_mongo_db_pu");
-        entityManager = emf.createEntityManager();
+        em = accessEntityManager();
         List<Fetva> fetvaList = new ArrayList<>();
-        entityManager.getTransaction().begin();
-        
-        Query query = entityManager.createQuery("from Fetva f   where f.fetvaCategoryId=:categoryId");
+        em.getTransaction().begin();
+        Query query = em.createQuery("from Fetva f   where f.fetvaCategoryId=:categoryId");
         query.setParameter("categoryId", categoryId);
         fetvaList = query.getResultList();
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        em.getTransaction().commit();
+        em.close();
+        return fetvaList;
+
+    }
+    
+    @Override
+    public List<Fetva> getFetvaById(String fetvaId) {
+        em = accessEntityManager();
+        List<Fetva> fetvaList = new ArrayList<>();
+        em.getTransaction().begin();
+        Query query = em.createQuery("from Fetva f   where f.id=:fetvaId");
+        query.setParameter("fetvaId", fetvaId);
+        fetvaList = query.getResultList();
+        em.getTransaction().commit();
+        em.close();
         return fetvaList;
 
     }

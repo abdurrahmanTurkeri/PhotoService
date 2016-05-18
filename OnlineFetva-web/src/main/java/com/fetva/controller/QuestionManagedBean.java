@@ -7,6 +7,7 @@ package com.fetva.controller;
 
 import com.fetva.service.QuestionService;
 import com.fetva.service.UserService;
+import com.fetva.statics.QuestionSourceTypes;
 import com.fetva.types.Question;
 import com.fetva.types.SiteUser;
 import java.io.Serializable;
@@ -57,10 +58,12 @@ public class QuestionManagedBean implements Serializable{
     public void saveQuestion() {
         try {
             question.setCreatedUser(siteUser);
-            question.setQuestionSourceType("Twitter");
+            question.setQuestionSourceType(QuestionSourceTypes.FROM_ADMIN.getSourceType());
             questionService.saveQuestion(question);
         } catch (Exception ex) {
+            ex.printStackTrace();
             Logger.getLogger(QuestionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         questionList = questionService.listOfQuestion();
     }
@@ -70,6 +73,7 @@ public class QuestionManagedBean implements Serializable{
          questionService.deleteQuestion(selectedQuestion);
         } catch (Exception ex) {
             Logger.getLogger(QuestionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         questionList = questionService.listOfQuestion();
     }

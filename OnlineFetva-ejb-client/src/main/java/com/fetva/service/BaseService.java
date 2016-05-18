@@ -5,12 +5,15 @@
  */
 package com.fetva.service;
 
+import javax.persistence.EntityManager;
+
 /**
  *
  * @author abdurrahmanturkeri
  */
 public interface BaseService {
     
+    EntityManager accessEntityManager();
     
     
 }

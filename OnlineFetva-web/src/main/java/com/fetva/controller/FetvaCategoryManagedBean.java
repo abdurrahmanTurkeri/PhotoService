@@ -7,10 +7,10 @@ package com.fetva.controller;
 
 import com.fetva.service.FetvaCategoryService;
 import com.fetva.types.FetvaCategory;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -20,8 +20,8 @@ import javax.inject.Inject;
  * @author abdurrahmanturkeri
  */
 @Named(value = "categoryManagedBean")
-@RequestScoped
-public class FetvaCategoryManagedBean {
+@javax.faces.view.ViewScoped
+public class FetvaCategoryManagedBean implements Serializable{
 
     @Inject
     FetvaCategoryService service;
@@ -56,6 +56,7 @@ public class FetvaCategoryManagedBean {
 
         try {
             service.deleteCategory(selectedCategory);
+            categoryList = service.listOfCategory();
         } catch (Exception ex) {
             ex.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(ex.getMessage()));

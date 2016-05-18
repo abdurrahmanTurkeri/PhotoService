@@ -6,6 +6,7 @@
 package com.fetva.types;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class Question implements Serializable{
     //TODO:lookup ile bu data valide edilmeli ve sayfaya getirilmeli 
     private String questionSourceType;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private SiteUser createdUser;
     
     private String questionTitle;

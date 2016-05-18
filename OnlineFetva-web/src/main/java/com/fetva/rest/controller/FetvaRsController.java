@@ -34,15 +34,41 @@ public class FetvaRsController {
     }
 
     @GET
-    @Path("/kategori/{param}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Fetva> getFetvaList(@PathParam("param") String categoryId) {
-       try{
-        List<Fetva> result = fetvaService.listOfFetvaByCategory(categoryId);
-        return result;
-       }catch(Exception ex){
-           ex.printStackTrace();
-           return null;
-       }
+    @Path("/kategori/{param}/{noDetail}")
+    @Produces(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+    public FetvaContainer getFetvaList(@PathParam("param") String categoryId,
+            @PathParam("noDetail") String noDetail
+            ) {
+        try {
+            List<Fetva> result =null;
+            FetvaContainer fetvaContainer = new FetvaContainer();
+            if(noDetail!=null && noDetail.equals("true")){
+                
+            }else{
+               result = fetvaService.listOfFetvaByCategory(categoryId);
+            }
+            
+            fetvaContainer.setFetvaList(result);
+            return fetvaContainer;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @GET
+    @Path("/fetva/{param}")
+    @Produces(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+    public FetvaContainer getFetvaList(@PathParam("param") String fetvaId) {
+        try {
+            List<Fetva> result =null;
+            FetvaContainer fetvaContainer = new FetvaContainer();
+            result = fetvaService.getFetvaById(fetvaId);
+            fetvaContainer.setFetvaList(result);
+            return fetvaContainer;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

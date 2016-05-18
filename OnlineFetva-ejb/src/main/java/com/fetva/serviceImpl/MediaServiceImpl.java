@@ -6,11 +6,7 @@
 package com.fetva.serviceImpl;
 
 import com.fetva.service.MediaService;
-import com.fetva.service.QuestionService;
-import com.fetva.service.UserService;
 import com.fetva.types.Media;
-import com.fetva.types.Question;
-import com.fetva.types.SiteUser;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,7 +14,6 @@ import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 
 @Dependent
 @Stateless

@@ -8,11 +8,13 @@ package com.fetva.controller;
 import com.fetva.service.FetvaCategoryService;
 import com.fetva.service.FetvaService;
 import com.fetva.service.QuestionService;
+import com.fetva.statics.QuestionSourceTypes;
 import com.fetva.types.Answer;
 import com.fetva.types.Fetva;
 import com.fetva.types.FetvaCategory;
 import com.fetva.types.Question;
 import com.fetva.types.SiteUser;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -22,6 +24,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.shiro.SecurityUtils;
+import org.primefaces.context.RequestContext;
+
 
 /**
  *
@@ -39,15 +43,19 @@ public class FetvaManagedBean {
 
     @Inject
     FetvaService fetvaService;
+    
+    QuestionSourceTypes questionSourceTypes;
 
     private String answerText;
 
     private Fetva fetva = new Fetva();
     private List<FetvaCategory> fetvaCategoryList;
     private List<Question> questionList;
+    private List<Question> tempQuestionList;
     private List<Fetva> fetvaList;
     private Fetva selectedFetva;
     private Fetva tempSelectedFetva;
+    private List<String> selectedSourceTypes;
     /**
      * Creates a new instance of FetvaManagedBean
      */
@@ -58,6 +66,7 @@ public class FetvaManagedBean {
     public void init() {
         fetvaCategoryList = categoryService.listOfCategory();
         questionList = questionService.listOfQuestion();
+        tempQuestionList=new ArrayList<>(questionList);
         fetvaList=fetvaService.listOfFetva();
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("questionList", questionList);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("categoryList", fetvaCategoryList);
@@ -78,6 +87,20 @@ public class FetvaManagedBean {
             ex.printStackTrace();
         }
 
+    }
+    
+    public void filterQuestions(){
+        tempQuestionList.clear();
+        if(getSelectedSourceTypes().size()<1){
+            tempQuestionList=new ArrayList<>(questionList);
+        }
+        for(Question q :questionList){
+            if(getSelectedSourceTypes().contains(q.getQuestionSourceType())){
+                tempQuestionList.add(q);
+            }
+        }
+        
+        RequestContext.getCurrentInstance().update("insertForm:questionInput");
     }
 
     public Fetva getFetva() {
@@ -135,6 +158,24 @@ public class FetvaManagedBean {
     public void setTempSelectedFetva(Fetva tempSelectedFetva) {
         this.tempSelectedFetva = tempSelectedFetva;
     }
+
+    public List<Question> getTempQuestionList() {
+        return tempQuestionList;
+    }
+
+    public void setTempQuestionList(List<Question> tempQuestionList) {
+        this.tempQuestionList = tempQuestionList;
+    }
+
+    public List<String> getSelectedSourceTypes() {
+        return selectedSourceTypes;
+    }
+
+    public void setSelectedSourceTypes(List<String> selectedSourceTypes) {
+        this.selectedSourceTypes = selectedSourceTypes;
+    }
+
+   
     
     
 

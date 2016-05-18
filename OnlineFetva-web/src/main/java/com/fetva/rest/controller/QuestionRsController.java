@@ -7,9 +7,13 @@ package com.fetva.rest.controller;
 
 import com.fetva.service.FetvaCategoryService;
 import com.fetva.service.FetvaService;
+import com.fetva.service.QuestionService;
+import com.fetva.service.UserService;
+import com.fetva.statics.QuestionSourceTypes;
 import com.fetva.types.Fetva;
 import com.fetva.types.FetvaCategory;
 import com.fetva.types.Question;
+import com.fetva.types.SiteUser;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -31,7 +35,10 @@ import javax.ws.rs.core.Response;
 public class QuestionRsController {
 
     @Inject
-    FetvaCategoryService categoryService;
+    QuestionService questionService;
+    
+    @Inject 
+    UserService userService;
 
     /**
      * Creates a new instance of FetvaRsController
@@ -40,12 +47,22 @@ public class QuestionRsController {
     }
 
     @GET
-    @Path("/{questionText}/{soranIsim}/{soranNo}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{questionText}/{soranIsim}/{soranNo}/{soranEmail}")
+    @Produces(MediaType.APPLICATION_JSON+ ";charset=utf-8")
     public Response askQuestion(@PathParam("questionText") String questionText,
-            @PathParam("soranIsim") String soranIsim, @PathParam("soranNo") String soranNo) {
+            @PathParam("soranIsim") String soranIsim, @PathParam("soranNo") String soranNo,
+            @PathParam("soranEmail") String soranEmail) {
         WrapperObject wrapperObject=new WrapperObject();
         try {
+            Question question=new Question();
+            SiteUser siteUser=new SiteUser(soranIsim,soranEmail,soranNo);
+            SiteUser createdUser= userService.saveUser(siteUser);
+            question.setCreatedUser(createdUser);
+            question.setQuestionSourceType(QuestionSourceTypes.FROM_MOBILE.getSourceType());
+            question.setQuestionText(questionText);
+            question.setQuestionTitle("Ziyaretci Sorusu");
+            
+            questionService.saveQuestion(question);
             wrapperObject.setResult("Sorunuz Alinmistir");
             return Response.status(200).entity(wrapperObject).build();
 

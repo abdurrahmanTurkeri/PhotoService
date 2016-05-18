@@ -21,4 +21,5 @@ public interface FetvaService extends BaseService{
     
     public void deleteFetva(Fetva fetva);
     
+    public List<Fetva> getFetvaById(String fetvaId);
 }
