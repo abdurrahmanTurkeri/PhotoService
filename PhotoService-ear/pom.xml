@@ -2,17 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>OnlineFetva</artifactId>
-        <groupId>com.mycompany</groupId>
+        <artifactId>PhotoService</artifactId>
+        <groupId>com.fatih.satir</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.mycompany</groupId>
-    <artifactId>OnlineFetva-ear</artifactId>
+    <groupId>com.fatih.satir</groupId>
+    <artifactId>PhotoService-ear</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>ear</packaging>
 
-    <name>OnlineFetva-ear</name>
+    <name>PhotoService-ear</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,12 +36,12 @@
                 <configuration>
                     <modules>
                         <ejbModule>
-                            <groupId>com.foxcon.fetva</groupId>
-                            <artifactId>OnlineFetva-ejb</artifactId>
+                            <groupId>com.fatih.satir</groupId>
+                            <artifactId>PhotoService-ejb</artifactId>
                         </ejbModule>
                         <jarModule>
-                            <groupId>com.foxcon.fetva</groupId>
-                            <artifactId>OnlineFetva-ejb-client</artifactId>
+                            <groupId>com.fatih.satir</groupId>
+                            <artifactId>PhotoService-ejb-client</artifactId>
                         </jarModule>
                     </modules>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
@@ -53,14 +53,14 @@
    
     <dependencies>
         <dependency>
-            <groupId>com.foxcon.fetva</groupId>
-            <artifactId>OnlineFetva-ejb</artifactId>
+            <groupId>com.fatih.satir</groupId>
+            <artifactId>PhotoService-ejb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.foxcon.fetva</groupId>
-            <artifactId>OnlineFetva-ejb-client</artifactId>
+            <groupId>com.fatih.satir</groupId>
+            <artifactId>PhotoService-ejb-client</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>

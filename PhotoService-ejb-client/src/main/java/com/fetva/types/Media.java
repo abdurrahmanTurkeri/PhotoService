@@ -10,6 +10,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import org.eclipse.persistence.nosql.annotations.Field;
 import org.eclipse.persistence.nosql.annotations.NoSql;
 import org.hibernate.annotations.GenericGenerator;
@@ -36,6 +37,11 @@ public class Media implements Serializable {
      *Media Type jpg avi mp4 mpeg  
      */
     private String type;
+    
+    @OneToOne
+    private SiteUser siteUser;
+    
+    
 
     public String getId() {
         return id;
@@ -73,9 +79,20 @@ public class Media implements Serializable {
         return name;
     }
 
+    public SiteUser getSiteUser() {
+        return siteUser;
+    }
+
+    public void setSiteUser(SiteUser siteUser) {
+        this.siteUser = siteUser;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
+    
+    
+    
     
     
 
