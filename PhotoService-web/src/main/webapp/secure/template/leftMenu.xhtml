@@ -8,23 +8,18 @@
     <f:view>
         <h:form>
             <p:menu>
-                <p:submenu label="Fetva ">
-                    <p:menuitem value="Fetva Girişi"  url="/secure/fetva/fetvaActions.jsf"  icon="ui-icon-disk" />
-                    <p:menuitem value="Fetva Listesi" url="/secure/fetva/fetvaList.jsf" icon="ui-icon-arrowrefresh-1-w"/>
-                </p:submenu>
-                <p:submenu label="Fetva Kategori Yönetimi">
-                    <p:menuitem value="Kategori İşlemleri" url="/secure/fetvaCategory/fetvaCategoryActions.xhtml"  icon="ui-icon-close"/>
+               
+                <p:submenu label="Kategori Yönetimi">
+                    <p:menuitem value="Kategori İşlemleri" url="/secure/photoCategory/photoCategoryActions.xhtml"  icon="ui-icon-close"/>
                 </p:submenu>
                 <p:submenu label="Kullanıcı Girişi">
                     <p:menuitem value="Kullanıcı İşlemleri"  url="/secure/user/userActions.jsf" icon="ui-icon-close"/>
                 </p:submenu>
                 <p:submenu label="Dosya İşlemleri">
                     <p:menuitem value="Dosya Yükleme" url="/secure/media/mediaActions.xhtml"  icon="ui-icon-close"/>
+                    <p:menuitem value="Twitter Media" url="/secure/media/twitterImages.xhtml"  icon="ui-icon-close"/>
                 </p:submenu>
-                <p:submenu label="Soru İşlemleri">
-                    <p:menuitem value="Soru Girişi" url="/secure/question/questionInsert.xhtml"  icon="ui-icon-close"/>
-                </p:submenu>
-            </p:menu>
+              </p:menu>
         </h:form>
     </f:view>
 
