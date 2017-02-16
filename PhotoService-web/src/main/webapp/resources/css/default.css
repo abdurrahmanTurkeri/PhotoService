@@ -100,3 +100,10 @@ a:link:hover, a:visited:hover  {
 .formInput input{
     width: 70%;
 }
+
+/* CUSTOM CSS*/
+.ui-messages-info, .ui-message-info {
+    color: #ffffff !important;
+    background-color: #1abc9c !important;
+    border-color: #bce8f1 !important;
+}
