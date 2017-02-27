@@ -9,6 +9,7 @@ import com.fsatir.service.MediaService;
 import com.fsatir.service.PhotoCategoryService;
 import com.fsatir.types.Media;
 import com.fsatir.types.PhotoCategory;
+import com.fsatir.types.SiteUser;
 import com.fsatir.types.TrendImages;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,6 +35,7 @@ import javax.inject.Inject;
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
+import org.apache.shiro.SecurityUtils;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
@@ -92,6 +94,8 @@ public class MediaManagedBean implements Serializable {
             media.setSource(SOURCE_ADMIN);
             media.setLikeCount(1);
             media.setShareCount(1);
+            SiteUser siteUser=(SiteUser)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("siteUser");
+            media.setSiteUser(siteUser);
             mediaService.saveMedia(media);
             mediaList = mediaService.listOfMedia();
         } catch (Exception ex) {

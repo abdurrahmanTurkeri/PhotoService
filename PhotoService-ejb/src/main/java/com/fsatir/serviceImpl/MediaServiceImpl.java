@@ -76,7 +76,9 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
     @Override
     public Media saveMedia(Media media) throws Exception {
         entityManager = accessEntityManager();
-        entityManager.getTransaction().begin();
+        if(!entityManager.getTransaction().isActive()){
+          entityManager.getTransaction().begin();
+        }   
         entityManager.persist(media);
         entityManager.getTransaction().commit();
         entityManager.close();

@@ -15,7 +15,6 @@
       <property name="hibernate.ogm.datastore.create_database" value="true"/>
       <property name="hibernate.classloading.use_current_tccl_as_parent" value="false"/>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-      <property name="show_sql" value="true"/>
     </properties>
   </persistence-unit>
 </persistence>
