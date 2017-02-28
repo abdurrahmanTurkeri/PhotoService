@@ -20,4 +20,6 @@ public interface MediaService {
     public Media getMediaDetail(String mediaId) throws Exception;
     
     public Media saveMedia(Media media) throws Exception;
+    
+    public void deleteMedia(List<Media> selectedMediaList) throws Exception;
 }
