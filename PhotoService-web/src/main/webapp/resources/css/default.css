@@ -107,3 +107,7 @@ a:link:hover, a:visited:hover  {
     background-color: #1abc9c !important;
     border-color: #bce8f1 !important;
 }
+
+.trendName, .trendURL {
+    font-size: xx-small;
+}

@@ -84,11 +84,11 @@
                 <div class="formRowBasic width90">
                     <div class="formLabel width70"></div>
                     <div class="formInput width20">
-                        <p:commandButton action="#{userManagedBean.saveUser()}" value="Kullanıcıyı Kaydet" update=":userList"/>
+                        <p:commandButton action="#{userManagedBean.saveUser()}" value="Kullanıcıyı Kaydet" update=":insertForm:userList"/>
                     </div>
                 </div>
             </p:fieldset>
-        </h:form>
+        
 
        <p:dataTable resizableColumns="true" id="userList" var="user" value="#{userManagedBean.userList}">
            <p:column headerText="Email Adresi">#{user.email}</p:column>
@@ -101,7 +101,7 @@
          
         </p:dataTable>
 
-       
+       </h:form>
 
     </ui:define>
 

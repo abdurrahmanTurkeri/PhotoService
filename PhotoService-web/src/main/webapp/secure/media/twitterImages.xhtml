@@ -11,21 +11,49 @@
     <ui:define name="content">
         <p:growl id="messages" showDetail="true"  />
        
-        <p:dataTable resizableColumns="true" id="fileList" var="trendImage" value="#{twitterManagedBean.trendImagesList}">
-            <p:column headerText="Favori Adeti">#{trendImage.favorite_count}</p:column>
-            <p:column headerText="RT Adeti">#{trendImage.retweet_count}</p:column>
-            <p:column headerText="İmaj"><p:graphicImage value="#{trendImage.trendImgURL}" /></p:column>
-            <p:column headerText="Post Eden ">#{trendImage.user_screenName}</p:column>
+        <h:form id="insertForm" enctype="multipart/form-data">
+        <p:dataTable resizableColumns="true" id="fileList" var="trendImage" 
+                     value="#{twitterManagedBean.trendImagesListFiltered}"
+                     rowKey="#{trendImage.user_screenName}"
+                     selection="#{twitterManagedBean.selectedTrendImagesList}">
+           
+            
+            <p:column selectionMode="multiple" style="width: 3%;text-align: center;"></p:column>
+            <p:column headerText="Favori" width="60">#{trendImage.favorite_count}</p:column>
+            <p:column headerText="Retweet" width="60">#{trendImage.retweet_count}</p:column>
+            <p:column headerText="İmaj" width="60"  style="text-align: center" >
+                    <h:graphicImage value="#{trendImage.trendImgURL}" width="50" height="50"/>
+            </p:column>
+            <p:column headerText="Post Eden" width="120">#{trendImage.user_screenName}</p:column>
+            <p:column headerText="URL"><span style="font-size: xx-small"> #{trendImage.trendImgURL} </span></p:column>
+            <p:column headerText="Hashtag"><span style="font-size: small"> #{trendImage.trendName} </span></p:column>
             <p:column headerText="İşlemler">
-                <p:button onclick="" value="Görüntüle"/>
+                <p:commandButton process="fileList" update="" icon="ui-icon-extlink" value="Göster" /> 
 
             </p:column>
 
-
+            <f:facet name="header">
+                <p:commandButton update="messages :insertForm:fileList" icon="ui-icon-arrowthickstop-1-s" value="Twitter Trendleri Çek" action="#{twitterManagedBean.pullTrendTopicImages()}" />
+                <p:spacer width="20"/>
+                <p:commandButton process="fileList" update="messages :insertForm:fileList" icon="ui-icon-disk" value="Listeyi DB'ye Kaydet" action="#{twitterManagedBean.saveTrendImages()}" />
+                <p:spacer width="20"/>
+                <p:commandButton process="fileList" update=":insertForm:fileList" icon="ui-icon-folder-collapsed" value="DB'den Trendleri Çek" action="#{twitterManagedBean.pullTrendImagesFromDB()}" />
+            </f:facet>  
+           
         </p:dataTable>
 
-
-
+        </h:form>          
+        
+         <p:ajaxStatus onstart="PF('loadingDialog').show()" onsuccess="PF('loadingDialog').hide()" onerror="PF('errorDialog').show()" />
+        
+          <p:dialog widgetVar="loadingDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:outputLabel value="Yükleniyor..!"/>
+            </p:dialog>
+            
+            <p:dialog widgetVar="errorDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:outputLabel value="Bir hata meydana geldi."/>
+            </p:dialog>
+        
     </ui:define>
 
 </ui:composition>

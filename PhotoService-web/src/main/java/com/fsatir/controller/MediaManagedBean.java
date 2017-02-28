@@ -9,6 +9,7 @@ import com.fsatir.service.MediaService;
 import com.fsatir.service.PhotoCategoryService;
 import com.fsatir.types.Media;
 import com.fsatir.types.PhotoCategory;
+import com.fsatir.types.TrendImages;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -44,7 +46,7 @@ import org.primefaces.model.UploadedFile;
  * @author abdurrahmanturkeri
  */
 @ManagedBean(name = "mediaManagedBean")
-@ApplicationScoped
+@SessionScoped
 public class MediaManagedBean implements Serializable {
 
     @EJB
@@ -60,7 +62,12 @@ public class MediaManagedBean implements Serializable {
     private UploadedFile uploadedFile;
     private List<PhotoCategory> categoryList;
     private List<PhotoCategory> selectedCategoryList = new ArrayList<>();
-
+    public static final String SOURCE_CAPSAPP = "CAPSAPP";
+    public static final String SOURCE_ADMIN = "ADMIN";    
+    public static final String SOURCE_TWITTER = "TWITTER";
+    private TrendImages trendImages = new TrendImages();
+    
+    
     /**
      * Creates a new instance of QuestionManagedBean
      */
@@ -81,6 +88,10 @@ public class MediaManagedBean implements Serializable {
     public void saveMedia() {
         try {            
             media.setCategoryList(selectedCategoryList);
+            media.setTrendImages(trendImages);
+            media.setSource(SOURCE_ADMIN);
+            media.setLikeCount(1);
+            media.setShareCount(1);
             mediaService.saveMedia(media);
             mediaList = mediaService.listOfMedia();
         } catch (Exception ex) {
@@ -172,10 +183,6 @@ public class MediaManagedBean implements Serializable {
     }
 
     public void onSelectedItemsDelete(SelectEvent event){
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Başarılı!", "Silme işlemi tamamlandı.");         
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-    public void testet(){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Başarılı!", "Silme işlemi tamamlandı.");         
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
