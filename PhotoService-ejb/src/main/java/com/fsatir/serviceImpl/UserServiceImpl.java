@@ -46,11 +46,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Override
     public SiteUser loadUser(String userName, String password) {
-        SiteUser siteUser = new SiteUser();
+        SiteUser siteUser = null;
         try {
             em = accessEntityManager();
             em.getTransaction().begin();
-            Query query = em.createQuery("select a from SiteUser a where  a.userName=:param1 and a.password=:param2");
+            Query query = em.createQuery("from SiteUser a where a.userName=:param1 and a.password=:param2");
             query.setParameter("param1", userName);
             query.setParameter("param2", password);
             siteUser = (SiteUser) query.getSingleResult();
