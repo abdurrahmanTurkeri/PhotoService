@@ -7,6 +7,7 @@ package com.fsatir.types;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,20 +38,41 @@ public class Media implements Serializable {
     private byte[] mediaData;
     
     private String name;
+    
+    private Long mediaRowNo;
+    
+    /*
+        Number of likes by CapsApp users
+    */
+    private int likeCount;
+    /*
+        Number of shares by CapsApp users
+    */
+    private int shareCount;
 
     /*
      *Media Type jpg avi mp4 mpeg  
      */
     private String type;
     
+    /*
+       Source of Media: Twitter, CapsApp, Admin
+    */
+    private String source;
+    
+    //***
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = TrendImages.class)
+    private TrendImages trendImages;
     
     @ManyToMany(targetEntity = PhotoCategory.class)
     private List<PhotoCategory> categoryList;
     
     @ManyToOne(fetch = FetchType.EAGER)
     private SiteUser siteUser;
-   
-
+    
+    
+ 
+    
     public String getId() {
         return id;
     }
@@ -111,7 +133,46 @@ public class Media implements Serializable {
         this.siteUser = siteUser;
     }
 
-    
+    public Long getMediaRowNo() {
+        return mediaRowNo;
+    }
+
+    public void setMediaRowNo(Long mediaRowNo) {
+        this.mediaRowNo = mediaRowNo;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public TrendImages getTrendImages() {
+        return trendImages;
+    }
+
+    public void setTrendImages(TrendImages trendImages) {
+        this.trendImages = trendImages;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getShareCount() {
+        return shareCount;
+    }
+
+    public void setShareCount(int shareCount) {
+        this.shareCount = shareCount;
+    }
+   
     
     
     
