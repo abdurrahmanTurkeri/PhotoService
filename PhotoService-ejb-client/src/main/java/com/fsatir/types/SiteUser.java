@@ -27,27 +27,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity(name = "SiteUser")
 public class SiteUser implements Serializable {
 
-    public SiteUser(String id, String userName, String firstName, String lastName, String email, String mobilePhone) {
-        this.id = id;
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.mobilePhone = mobilePhone;
-    }
     
-    public SiteUser(String userName, String email, String mobilePhone) {
-        this.userName = userName;
-        this.email = email;
-        this.mobilePhone = mobilePhone;
-    }
-
-    public SiteUser(String id) {
-        this.id = id;
-    }
-
-    public SiteUser() {
-    }
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -72,6 +52,29 @@ public class SiteUser implements Serializable {
     @OneToMany(mappedBy = "siteUser",cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private List<Media> mediaList;
 
+    
+    public SiteUser(String id, String userName, String firstName, String lastName, String email, String mobilePhone) {
+        this.id = id;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.mobilePhone = mobilePhone;
+    }
+    
+    public SiteUser(String userName, String email, String mobilePhone) {
+        this.userName = userName;
+        this.email = email;
+        this.mobilePhone = mobilePhone;
+    }
+
+    public SiteUser(String id) {
+        this.id = id;
+    }
+
+    public SiteUser() {
+    }
+    
     public String getId() {
         return id;
     }
