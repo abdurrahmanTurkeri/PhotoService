@@ -11,10 +11,18 @@ package com.fsatir.statics;
  */
 public enum TwitterInfos {
     
-    CONSUMER_KEY("CONSUMER_KEY","3N0HoJIzv2WtAYv1z1KpYq8jk"),
-    CONSUMER_SECRET("CONSUMER_SECRET","uKJUJp9Slp54kxCnvgVFoxOMGmzdYy7OaBfGW3tsYaKtOoD7dA"),
-    OAUTH_TOKEN("OAUTH_TOKEN",""),
-    OAUTH_SECRET("OAUTH_SECRET","");
+//    CONSUMER_KEY("CONSUMER_KEY","3N0HoJIzv2WtAYv1z1KpYq8jk"),
+//    CONSUMER_SECRET("CONSUMER_SECRET","uKJUJp9Slp54kxCnvgVFoxOMGmzdYy7OaBfGW3tsYaKtOoD7dA"),
+//    OAUTH_TOKEN("OAUTH_TOKEN",""),
+//    OAUTH_SECRET("OAUTH_SECRET","");
+    
+    CONSUMER_KEY("CONSUMER_KEY","YRLXc01SNMDsGq7gt5cTb2xUI"),
+    CONSUMER_SECRET("CONSUMER_SECRET","flOh0KUxrL3RnVnmpuzNelNu0mhdLVtlZ9sbF02kLyo2SARgYu"),
+    OAUTH_TOKEN("OAUTH_TOKEN","791087958652817408-AoVOfcrFxFP4iHQk5UQ5D9N2FIw8nJt"),
+    OAUTH_SECRET("OAUTH_SECRET","RYLzuG8fyxU1zXyjBbYFpLenJvmY1LtfHu73ugDlXEeWn");
+    
+    
+            
     
     final String code;
     final String  value;
