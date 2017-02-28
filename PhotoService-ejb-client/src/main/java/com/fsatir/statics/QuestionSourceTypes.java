@@ -11,7 +11,7 @@ package com.fsatir.statics;
  */
 public enum QuestionSourceTypes {
     
-    FROM_MOBILE("FROM_MOBILE"),FROM_WEB("FROM_WEB"),FROM_ADMIN("FROM_ADMIN");
+    FROM_MOBILE("FROM_MOBILE"),FROM_WEB("FROM_WEB"),FROM_ADMIN("FROM_ADMIN"),FROM_TWITTER("FROM_TWITTER");
     
     final String sourceType;
     

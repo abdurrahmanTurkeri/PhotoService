@@ -38,7 +38,7 @@ public class TrendImages implements Serializable{
     private byte [] trendImg;
     
     //***
-    @OneToOne(mappedBy = "trendImages")
+    @OneToOne(mappedBy = "trendImages",cascade = CascadeType.ALL)
     private Media media;
     
     public TrendImages() {

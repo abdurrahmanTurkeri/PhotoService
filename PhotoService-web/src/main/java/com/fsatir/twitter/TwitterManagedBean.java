@@ -5,8 +5,10 @@
  */
 package com.fsatir.twitter;
 
+import com.fsatir.controller.MediaManagedBean;
 import com.fsatir.service.MediaService;
 import com.fsatir.service.TrendImagesService;
+import com.fsatir.statics.QuestionSourceTypes;
 import com.fsatir.statics.TwitterInfos;
 import com.fsatir.types.Media;
 import com.fsatir.types.TrendImages;
@@ -49,12 +51,13 @@ import twitter4j.conf.ConfigurationBuilder;
 @ViewScoped
 public class TwitterManagedBean implements Serializable {
     
-    public static final int TURKEY_WOEID = 23424969;
-    List<TrendImages> trendImagesList =new ArrayList<>();
-    List<TrendImages> trendImagesListFiltered;
-    List<TrendImages> selectedTrendImagesList;
+    private static final int TURKEY_WOEID = 23424969;
+    List<Media> trendImagesList =new ArrayList<>();
+    List<Media> trendImagesListFiltered;
+    List<Media> selectedTrendImagesList;
     List<Media> mediaList;
     Media media = new Media();
+    private boolean  showDetail;
     
     
     @Inject
@@ -73,7 +76,12 @@ public class TwitterManagedBean implements Serializable {
       
        
         try{
+            
                trendImagesListFiltered = trendService.listOfTrendImages();
+               if(trendImagesListFiltered==null || trendImagesListFiltered.size()<1){
+                   trendImagesListFiltered=(List<Media>)   FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("trendImagesListFiltered");
+         
+               }
 //             mediaList = mediaService.listOfMedia();
 //             for(Media m :  mediaList)
 //             {
@@ -101,6 +109,8 @@ public class TwitterManagedBean implements Serializable {
                counter++;
             } 
             showMessage(counter+" adet sonuç getirildi.!");
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("trendImagesListFiltered",trendImagesListFiltered);
+         
         }catch(TwitterException ex){
             ex.printStackTrace();
         }
@@ -108,7 +118,7 @@ public class TwitterManagedBean implements Serializable {
     
        
     
-    public List<TrendImages> trendImageList(Twitter twitter,String trendName){
+    public List<Media> trendImageList(Twitter twitter,String trendName){
         
         Query query = new Query(trendName+" AND filter:images");
         query.setCount(1);
@@ -135,12 +145,14 @@ public class TwitterManagedBean implements Serializable {
                             // URL null değilse, görsel ve bigileri list'e eklenir.
                         if(trendImages.getTrendImgURL() != null)
                             {
-                                
+                                Media media=new Media();
+                                media.setName(Long.toString(status.getId()));
                                 trendImages.setFavorite_count(status.getFavoriteCount());
                                 trendImages.setRetweet_count(status.getRetweetCount());
                                 trendImages.setUser_screenName(status.getUser().getScreenName());
                                 trendImages.setTrendName(trendName);
-                                trendImagesList.add(counter++,trendImages);
+                                media.setTrendImages(trendImages);
+                                trendImagesList.add(counter++,media);
                             }
                     }
                }
@@ -185,13 +197,13 @@ public class TwitterManagedBean implements Serializable {
      /*
         Aynı URL'e sahip imajların ayıklanması
      */
-    public List<TrendImages> filterList(List<TrendImages> tL){
+    public List<Media> filterList(List<Media> tL){
         for(int i=0; i < tL.size(); i++)
         {
            
            for(int j=i+1; j < tL.size() && i < tL.size(); j++)
            {
-               if(tL.get(i).getTrendImgURL().equals(tL.get(j).getTrendImgURL()))
+               if(tL.get(i).getTrendImages().getTrendImgURL().equals(tL.get(j).getTrendImages().getTrendImgURL()))
                {
                    tL.remove(j);
                }
@@ -220,15 +232,19 @@ public class TwitterManagedBean implements Serializable {
         }
         else
         {
-            for(TrendImages ti : selectedTrendImagesList)
+            for(Media localMedia : selectedTrendImagesList)
             { 
+              
                 
-                byte [] arr = fetchImageFromURL(ti.getTrendImgURL());
-                ti.setTrendImg(arr);
+                byte [] arr = fetchImageFromURL(localMedia.getTrendImages().getTrendImgURL());
+                localMedia.getTrendImages().setTrendImg(arr);
+                localMedia.setMediaData(arr);
+                localMedia.setSource(QuestionSourceTypes.FROM_TWITTER.getSourceType());
+                mediaService.saveMedia(localMedia);
 //                media.setSource(SOURCE_TWITTER);
 //                media.setTrendImages(ti);
 //                mediaService.saveMedia(media);
-                trendService.saveTrendImage(ti);
+                //trendService.saveTrendImage(ti);
             }
              showMessage("Trend sonuçları veritabanına kaydedildi.");
              
@@ -261,31 +277,60 @@ public class TwitterManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
      
+     public void showDetail(){
+         showDetail=true;
+     }
 
-    
-    public List<TrendImages> getTrendImagesList() {
+    public List<Media> getTrendImagesList() {
         return trendImagesList;
     }
 
-    public void setTrendImagesList(List<TrendImages> trendImagesList) {
+    public void setTrendImagesList(List<Media> trendImagesList) {
         this.trendImagesList = trendImagesList;
     }
 
-    public List<TrendImages> getTrendImagesListFiltered() {
+    public List<Media> getTrendImagesListFiltered() {
         return trendImagesListFiltered;
     }
 
-    public void setTrendImagesListFiltered(List<TrendImages> trendImagesListFiltered) {
+    public void setTrendImagesListFiltered(List<Media> trendImagesListFiltered) {
         this.trendImagesListFiltered = trendImagesListFiltered;
     }
 
-    public List<TrendImages> getSelectedTrendImagesList() {
+    public List<Media> getSelectedTrendImagesList() {
         return selectedTrendImagesList;
     }
 
-    public void setSelectedTrendImagesList(List<TrendImages> selectedTrendImagesList) {
+    public void setSelectedTrendImagesList(List<Media> selectedTrendImagesList) {
         this.selectedTrendImagesList = selectedTrendImagesList;
     }
+
+    public List<Media> getMediaList() {
+        return mediaList;
+    }
+
+    public void setMediaList(List<Media> mediaList) {
+        this.mediaList = mediaList;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+
+    public boolean isShowDetail() {
+        return showDetail;
+    }
+
+    public void setShowDetail(boolean showDetail) {
+        this.showDetail = showDetail;
+    }
+     
+
+    
     
     
      

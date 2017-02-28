@@ -5,6 +5,7 @@
  */
 package com.fsatir.service;
 
+import com.fsatir.types.Media;
 import com.fsatir.types.TrendImages;
 import java.util.List;
 import javax.ejb.Local;
@@ -16,13 +17,13 @@ import javax.ejb.Local;
 @Local
 public interface TrendImagesService {
     
-    public List<TrendImages> listOfTrendImages() throws Exception;
+    public List<Media> listOfTrendImages() throws Exception;
     
-    public List<TrendImages> listOfTrendImagesByHashtag(String hashtag) throws Exception;
+    public List<Media> listOfTrendImagesByHashtag(String hashtag) throws Exception;
     
-    public TrendImages getTrendImage(String trendImageID) throws Exception;
+    public Media getTrendImage(String trendImageID) throws Exception;
     
-    public TrendImages saveTrendImage(TrendImages trendImage) throws Exception;
+    public Media saveTrendImage(Media trendImage) throws Exception;
     
-    public void deleteTrendImage(List<TrendImages> trendImageList) throws Exception;
+    public void deleteTrendImage(List<Media> trendImageList) throws Exception;
 }

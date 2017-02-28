@@ -61,7 +61,7 @@ public class Media implements Serializable {
     private String source;
     
     //***
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = TrendImages.class)
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = TrendImages.class,fetch = FetchType.EAGER)
     private TrendImages trendImages;
     
     @ManyToMany(targetEntity = PhotoCategory.class)
