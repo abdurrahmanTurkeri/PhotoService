@@ -6,24 +6,73 @@
 package com.fsatir.types;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import org.hibernate.annotations.GenericGenerator;
 
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@Entity(name = "TrendImages")
+@Table(name = "TrendImages")
 public class TrendImages implements Serializable{
 
+    
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
+    
     private String user_screenName;
     private int retweet_count;
     private int favorite_count;
     private String trendImgURL;
-
+    private String trendName;
+    private byte [] trendImg;
+    
+    //***
+    @OneToOne(mappedBy = "trendImages")
+    private Media media;
+    
     public TrendImages() {
 
     }
 
-  
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+    
+    
+    
+
+    public byte[] getTrendImg() {
+        return trendImg;
+    }
+
+    public void setTrendImg(byte[] trendImg) {
+        this.trendImg = trendImg;
+    }
+    
+
+    
+    public String getTrendName() {
+        return trendName;
+    }
+
+    public void setTrendName(String trendName) {
+        this.trendName = trendName;
+    }  
 
     public String getUser_screenName() {
         return user_screenName;
@@ -55,6 +104,14 @@ public class TrendImages implements Serializable{
 
     public void setTrendImgURL(String trendImgURL) {
         this.trendImgURL = trendImgURL;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }
