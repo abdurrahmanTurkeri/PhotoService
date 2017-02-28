@@ -83,4 +83,18 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
         return media;
      }
 
+    @Override
+    public void deleteMedia(List<Media> selectedMediaList) throws Exception {
+        entityManager = accessEntityManager();
+        entityManager.getTransaction().begin();
+        for(int i=0; i < selectedMediaList.size(); i++)
+          {
+            em.remove(em.contains(selectedMediaList.get(i)) ? selectedMediaList.get(i) : em.merge(selectedMediaList.get(i)));
+          } 
+        entityManager.getTransaction().commit();
+        entityManager.close();        
+   }
+
+    
+
 }
