@@ -11,6 +11,7 @@ import com.fsatir.service.TrendImagesService;
 import com.fsatir.statics.QuestionSourceTypes;
 import com.fsatir.statics.TwitterInfos;
 import com.fsatir.types.Media;
+import com.fsatir.types.SiteUser;
 import com.fsatir.types.TrendImages;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,19 +76,11 @@ public class TwitterManagedBean implements Serializable {
     public void init() {
       
        
-        try{
-            
+        try{            
                trendImagesListFiltered = trendService.listOfTrendImages();
                if(trendImagesListFiltered==null || trendImagesListFiltered.size()<1){
-                   trendImagesListFiltered=(List<Media>)   FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("trendImagesListFiltered");
-         
+                   trendImagesListFiltered=(List<Media>)   FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("trendImagesListFiltered");         
                }
-//             mediaList = mediaService.listOfMedia();
-//             for(Media m :  mediaList)
-//             {
-//                 trendImagesListFiltered.add(m.getTrendImages());
-//                 
-//             }
             } 
         catch (Exception ex) {
             Logger.getLogger(TwitterManagedBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,12 +139,18 @@ public class TwitterManagedBean implements Serializable {
                         if(trendImages.getTrendImgURL() != null)
                             {
                                 Media media=new Media();
-                                media.setName(Long.toString(status.getId()));
+                                                                
                                 trendImages.setFavorite_count(status.getFavoriteCount());
                                 trendImages.setRetweet_count(status.getRetweetCount());
                                 trendImages.setUser_screenName(status.getUser().getScreenName());
-                                trendImages.setTrendName(trendName);
+                                //trendImages.setTrendImgURL(status.getMediaEntities()[0].getMediaURLHttps());
+                                trendImages.setTrendName(trendName);                              
+                                
+                                media.setName(Long.toString(status.getId()));
+                                media.setMediaRowNo(status.getId());
+                                media.setType(status.getMediaEntities()[0].getType());                                
                                 media.setTrendImages(trendImages);
+                                
                                 trendImagesList.add(counter++,media);
                             }
                     }
@@ -180,7 +179,6 @@ public class TwitterManagedBean implements Serializable {
         String consumerSecret = TwitterInfos.CONSUMER_SECRET.getCredentialValue();
         String oAuthToken = TwitterInfos.OAUTH_TOKEN.getCredentialValue();
         String oAuthSecret = TwitterInfos.OAUTH_SECRET.getCredentialValue();
-
         
         ConfigurationBuilder builder = new ConfigurationBuilder();
         builder.setOAuthConsumerKey(consumerKey);
@@ -199,8 +197,7 @@ public class TwitterManagedBean implements Serializable {
      */
     public List<Media> filterList(List<Media> tL){
         for(int i=0; i < tL.size(); i++)
-        {
-           
+        {           
            for(int j=i+1; j < tL.size() && i < tL.size(); j++)
            {
                if(tL.get(i).getTrendImages().getTrendImgURL().equals(tL.get(j).getTrendImages().getTrendImgURL()))
@@ -232,22 +229,17 @@ public class TwitterManagedBean implements Serializable {
         }
         else
         {
+            SiteUser siteUser=(SiteUser)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("siteUser");
             for(Media localMedia : selectedTrendImagesList)
-            { 
-              
-                
+            {                               
                 byte [] arr = fetchImageFromURL(localMedia.getTrendImages().getTrendImgURL());
                 localMedia.getTrendImages().setTrendImg(arr);
                 localMedia.setMediaData(arr);
                 localMedia.setSource(QuestionSourceTypes.FROM_TWITTER.getSourceType());
+                localMedia.setSiteUser(siteUser);
                 mediaService.saveMedia(localMedia);
-//                media.setSource(SOURCE_TWITTER);
-//                media.setTrendImages(ti);
-//                mediaService.saveMedia(media);
-                //trendService.saveTrendImage(ti);
             }
-             showMessage("Trend sonuçları veritabanına kaydedildi.");
-             
+             showMessage("Trend sonuçları veritabanına kaydedildi.");             
         }     
     }
     
@@ -262,7 +254,8 @@ public class TwitterManagedBean implements Serializable {
         try {
           is = url.openStream ();
           bytes = IOUtils.toByteArray(is);
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
           e.printStackTrace();
         }
         finally {
@@ -329,7 +322,7 @@ public class TwitterManagedBean implements Serializable {
         this.showDetail = showDetail;
     }
      
-
+    
     
     
     

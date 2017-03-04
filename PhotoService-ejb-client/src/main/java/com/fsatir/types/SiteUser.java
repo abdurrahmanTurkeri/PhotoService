@@ -49,7 +49,7 @@ public class SiteUser implements Serializable {
     @Transient
     private String passwordMatch;
     
-    @OneToMany(mappedBy = "siteUser",cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "siteUser",fetch = FetchType.EAGER)
     private List<Media> mediaList;
 
     

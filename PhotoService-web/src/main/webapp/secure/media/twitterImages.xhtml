@@ -14,7 +14,7 @@
         <h:form id="insertForm" enctype="multipart/form-data">
         <p:dataTable resizableColumns="true" id="fileList" var="trendImage" 
                      value="#{twitterManagedBean.trendImagesListFiltered}"
-                     rowKey="#{trendImage.id}"
+                     rowKey="#{trendImage.trendImages.trendName}"
                      selection="#{twitterManagedBean.selectedTrendImagesList}">
            
             
@@ -44,19 +44,19 @@
 
         </h:form>          
         
-         <p:ajaxStatus onstart="PF('loadingDialog').show()" onsuccess="PF('loadingDialog').hide()" onerror="PF('errorDialog').show()" />
+        <p:ajaxStatus onstart="PF('loadingDialog').show()" onsuccess="PF('loadingDialog').hide()" onerror="PF('errorDialog').show()" />
         
-          <p:dialog widgetVar="loadingDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        <p:dialog widgetVar="loadingDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Yükleniyor..!"/>
-            </p:dialog>
+        </p:dialog>
             
-            <p:dialog widgetVar="errorDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        <p:dialog widgetVar="errorDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:outputLabel value="Bir hata meydana geldi."/>
-            </p:dialog>
+        </p:dialog>
         
-         <p:dialog widgetVar="detail_image"  id="detail_image" modal="true" visible="#{twitterManagedBean.showDetail eq true}" draggable="false" closable="false" resizable="false" showHeader="false">
+         <p:dialog widgetVar="detail_image"  id="detail_image" modal="true" visible="#{twitterManagedBean.showDetail eq true}" draggable="true" closable="true" closeOnEscape="true" resizable="false" showHeader="false">
               <h:graphicImage value="#{twitterManagedBean.selectedTrendImagesList.get(0).trendImages.trendImgURL}" />
-            </p:dialog>
+         </p:dialog>
          
     </ui:define>
 

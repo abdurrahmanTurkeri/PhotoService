@@ -67,7 +67,7 @@ public class Media implements Serializable {
     @ManyToMany(targetEntity = PhotoCategory.class)
     private List<PhotoCategory> categoryList;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private SiteUser siteUser;
     
     

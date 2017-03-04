@@ -53,18 +53,19 @@ public class MediaRsController {
     @GET
     @Path("/media/list/category/{param}/{noDetail}")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public List<Media> getMediaList(@PathParam("param") String categoryId,
-            @PathParam("noDetail") String noDetail
-    ) {
+    public MediaContainer getMediaList(@PathParam("param") String categoryId,
+            @PathParam("noDetail") String noDetail) 
+    {
         try {
             List<Media> result = null;
-
+            MediaContainer mc = new MediaContainer();     
             if (noDetail != null && noDetail.equals("true")) {
 
             } else {
                 result = mediaService.listOfMediaByCategory(categoryId);
+                mc.setMediaList(result);
             }
-            return result;
+            return mc;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;

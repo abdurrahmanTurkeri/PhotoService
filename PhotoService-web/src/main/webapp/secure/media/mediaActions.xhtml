@@ -105,7 +105,7 @@
                     <f:param name="imageID" value="#{media.id}"/>
                 </p:graphicImage>
             </p:column>
-            <p:column headerText="Kullanıcı Adı">userName</p:column>
+            <p:column headerText="Kullanıcı Adı">#{media.siteUser.userName}</p:column>
                     
             <f:facet name="header">
                 <p:commandButton process="fileList" update=":insertForm:multiMediaDetail" icon="ui-icon-extlink" value="Göster" oncomplete="PF('multiMediaDialog').show()" /> 

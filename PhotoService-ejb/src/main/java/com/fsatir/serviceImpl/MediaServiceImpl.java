@@ -7,6 +7,7 @@ package com.fsatir.serviceImpl;
 
 import com.fsatir.service.MediaService;
 import com.fsatir.types.Media;
+import com.fsatir.types.PhotoCategory;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -29,7 +30,9 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
         List<Media> mediaList = new ArrayList<>();
         try {
             entityManager = accessEntityManager();
-            entityManager.getTransaction().begin();
+            if(!entityManager.getTransaction().isActive()){
+                entityManager.getTransaction().begin();
+              }
             mediaList = entityManager.createQuery("from Media").getResultList();
             entityManager.getTransaction().commit();
             entityManager.close();
@@ -41,29 +44,47 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
     }
 
     @Override
-    public List<Media> listOfMediaByCategory(String mediaCategoryId) throws Exception {
+    public List<Media> listOfMediaByCategory(String categoryId) throws Exception {
 
         List<Media> mediaList = new ArrayList<>();
+        List<Media> mediaListReturn = new ArrayList<>();
+        PhotoCategory photoCategory = null;
+        int i = 0;
         try {
             entityManager = accessEntityManager();
-            entityManager.getTransaction().begin();
-            Query query = entityManager.createQuery("from Media a where a.category.id=:param1");
-            query.setParameter("param1", mediaCategoryId);
-            mediaList = query.getResultList();
+            if(!entityManager.getTransaction().isActive()){
+                 entityManager.getTransaction().begin();
+             }
+            Query q = entityManager.createQuery("from PhotoCategory p where p.id=:param1");
+            q.setParameter("param1", categoryId);
+            photoCategory = (PhotoCategory) q.getSingleResult();
+            
+            mediaList = entityManager.createQuery("from Media").getResultList();
+
+            for(Media m : mediaList)
+            {                
+               if(mediaList.get(i).getCategoryList().contains(photoCategory))
+               {
+                    mediaListReturn.add(m);
+               }                
+                i++;
+            }
             entityManager.getTransaction().commit();
             entityManager.close();
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return mediaList;
+        return mediaListReturn;
     }
 
     @Override
     public Media getMediaDetail(String mediaId) throws Exception {
         Media media = null;
         entityManager = accessEntityManager();
-        entityManager.getTransaction().begin();
+        if(!entityManager.getTransaction().isActive()){
+          entityManager.getTransaction().begin();
+        }
         Query query = entityManager.createQuery("from Media a where a.id=:param1");
         query.setParameter("param1", mediaId);
         media = (Media) query.getSingleResult();
@@ -88,7 +109,9 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
     @Override
     public void deleteMedia(List<Media> selectedMediaList) throws Exception {
         entityManager = accessEntityManager();
-        entityManager.getTransaction().begin();
+        if(!entityManager.getTransaction().isActive()){
+                entityManager.getTransaction().begin();
+        }
         for(int i=0; i < selectedMediaList.size(); i++)
           {
             em.remove(em.contains(selectedMediaList.get(i)) ? selectedMediaList.get(i) : em.merge(selectedMediaList.get(i)));

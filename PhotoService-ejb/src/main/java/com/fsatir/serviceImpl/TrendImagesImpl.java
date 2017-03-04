@@ -32,11 +32,11 @@ public class TrendImagesImpl extends BaseServiceImpl implements TrendImagesServi
         try {
             entityManager = accessEntityManager();
             if(!entityManager.getTransaction().isActive()){
-            entityManager.getTransaction().begin();
+                entityManager.getTransaction().begin();
             }
-            Query query = entityManager.createQuery("from Media  m where m.source=:param1");
+            Query query = entityManager.createQuery("from Media  m where m.source=:param1"); 
             query.setParameter("param1", QuestionSourceTypes.FROM_TWITTER.getSourceType());
-            trendImagesList=query.getResultList();
+            trendImagesList = query.getResultList();
             entityManager.getTransaction().commit();
             
 
@@ -52,8 +52,10 @@ public class TrendImagesImpl extends BaseServiceImpl implements TrendImagesServi
          List<Media> trendImagesList = new ArrayList<>();
         try {
             entityManager = accessEntityManager();
-            entityManager.getTransaction().begin();
-            Query query = entityManager.createQuery("from Media a where a.trendName=:param1");
+            if(!entityManager.getTransaction().isActive()){
+                entityManager.getTransaction().begin();
+             }
+            Query query = entityManager.createQuery("from Media a where a.trendImages.trendName=:param1");
             query.setParameter("param1", hashtag);
             trendImagesList = query.getResultList();
             entityManager.getTransaction().commit();
@@ -70,8 +72,10 @@ public class TrendImagesImpl extends BaseServiceImpl implements TrendImagesServi
     public Media getTrendImage(String trendImageID) throws Exception {
         Media trendImage = null;
         entityManager = accessEntityManager();
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("from Media a where a.id=:param1");
+        if(!entityManager.getTransaction().isActive()){
+          entityManager.getTransaction().begin();
+        }
+        Query query = entityManager.createQuery("from Media a where a.trendImages.id=:param1");
         query.setParameter("param1", trendImageID);
         trendImage = (Media) query.getSingleResult();
         entityManager.getTransaction().commit();
@@ -83,7 +87,9 @@ public class TrendImagesImpl extends BaseServiceImpl implements TrendImagesServi
     @Override
     public Media saveTrendImage(Media trendImage) throws Exception {
         entityManager = accessEntityManager();
-        entityManager.getTransaction().begin();
+        if(!entityManager.getTransaction().isActive()){
+          entityManager.getTransaction().begin();
+        }
         entityManager.persist(trendImage);
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -93,10 +99,14 @@ public class TrendImagesImpl extends BaseServiceImpl implements TrendImagesServi
     @Override
     public void deleteTrendImage(List<Media> trendImageList) throws Exception {
         entityManager = accessEntityManager();
-        entityManager.getTransaction().begin();
+        if(!entityManager.getTransaction().isActive()){
+          entityManager.getTransaction().begin();
+        }
         for(int i=0; i < trendImageList.size(); i++)
           {
             em.remove(em.contains(trendImageList.get(i)) ? trendImageList.get(i) : em.merge(trendImageList.get(i)));
+            //Sadece trendImage'ı kaldırmak için
+         //   em.remove(em.contains(trendImageList.get(i).getTrendImages()) ? trendImageList.get(i).getTrendImages() : em.merge(trendImageList.get(i).getTrendImages()));
           } 
         entityManager.getTransaction().commit();
         entityManager.close(); 
