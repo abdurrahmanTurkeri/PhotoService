@@ -6,6 +6,7 @@
 package com.fsatir.types;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 
@@ -18,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -44,11 +47,11 @@ public class Media implements Serializable {
     /*
         Number of likes by CapsApp users
     */
-    private int likeCount;
+    private Integer likeCount=0;
     /*
         Number of shares by CapsApp users
     */
-    private int shareCount;
+    private Integer shareCount=0;
 
     /*
      *Media Type jpg avi mp4 mpeg  
@@ -67,10 +70,11 @@ public class Media implements Serializable {
     @ManyToMany(targetEntity = PhotoCategory.class)
     private List<PhotoCategory> categoryList;
     
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private SiteUser siteUser;
     
-    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date insertDate;
  
     
     public String getId() {
@@ -157,21 +161,30 @@ public class Media implements Serializable {
         this.trendImages = trendImages;
     }
 
-    public int getLikeCount() {
+    public Integer getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(int likeCount) {
+    public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
     }
 
-    public int getShareCount() {
+    public Integer getShareCount() {
         return shareCount;
     }
 
-    public void setShareCount(int shareCount) {
+    public void setShareCount(Integer shareCount) {
         this.shareCount = shareCount;
     }
+
+    public Date getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(Date insertDate) {
+        this.insertDate = insertDate;
+    }
+
    
     
     

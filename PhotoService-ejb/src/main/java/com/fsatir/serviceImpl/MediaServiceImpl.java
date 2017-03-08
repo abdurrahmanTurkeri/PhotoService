@@ -99,7 +99,8 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
         entityManager = accessEntityManager();
         if(!entityManager.getTransaction().isActive()){
           entityManager.getTransaction().begin();
-        }   
+        }
+        entityManager.merge(media.getSiteUser());
         entityManager.persist(media);
         entityManager.getTransaction().commit();
         entityManager.close();

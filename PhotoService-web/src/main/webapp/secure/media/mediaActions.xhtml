@@ -92,10 +92,11 @@
             
         <p:dataTable resizableColumns="true" id="fileList" var="media" 
                      value="#{mediaManagedBean.mediaList}"
-                     rowKey="#{media.mediaRowNo}"
+                     rowKey="#{media.id}"
                      selection="#{mediaManagedBean.selectedMediaList}">
             
             <p:column selectionMode="multiple" style="width: 3%;text-align: center;"></p:column>
+            <p:column headerText="No" style="width:10%;">#{media.id}</p:column>
             <p:column headerText="No" style="width:10%;">#{media.mediaRowNo}</p:column>
             <p:column headerText="Dosya İsmi">#{media.name}</p:column>
             <p:column headerText="Dosya Tipi  ">#{media.type}</p:column>
@@ -105,6 +106,7 @@
                     <f:param name="imageID" value="#{media.id}"/>
                 </p:graphicImage>
             </p:column>
+            <p:column headerText="Kayıt Tarihi" sortable="true" sortBy="#{media.insertDate}" >#{media.insertDate}</p:column>
             <p:column headerText="Kullanıcı Adı">#{media.siteUser.userName}</p:column>
                     
             <f:facet name="header">
@@ -115,11 +117,11 @@
         </p:dataTable>
 
             
-        <p:dialog header="Seçilen Görseller" widgetVar="multiMediaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" width="200">
+        <p:dialog header="Seçilen Görseller" widgetVar="multiMediaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" width="600">
             <p:outputPanel id="multiMediaDetail" style="text-align:center;">
                 <ui:repeat value="#{mediaManagedBean.selectedMediaList}" var="media">
                     <h:outputText value="#{media.name}" style="display:block"/>
-                    <p:graphicImage value="#{mediaManagedBean.image}" style="display:inline" width="50" height="50"> 
+                    <p:graphicImage value="#{mediaManagedBean.image}" style="display:inline" > 
                             <f:param name="imageID" value="#{media.id}"/>
                     </p:graphicImage> 
                     <p:separator />
@@ -128,7 +130,7 @@
         </p:dialog>
             
          <p:dialog header="Silinecek Görseller" widgetVar="multiMediaDeleteDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="true" width="200">
-            <p:outputPanel id="multiMediaDeleteDetail" style="text-align:center;">
+             <p:outputPanel id="multiMediaDeleteDetail" style="text-align:center;overflow: scroll;max-height: 200px" >
                 <ui:repeat value="#{mediaManagedBean.selectedMediaList}" var="media">
                     <h:outputText value="#{media.name}" style="display:block"/>
                     <p:graphicImage value="#{mediaManagedBean.image}" style="display:inline" width="50" height="50"> 
@@ -143,6 +145,7 @@
                                        oncomplete="PF('multiMediaDeleteDialog').hide()">
                           
                      </p:commandButton> 
+                     
                     
             </p:outputPanel>
         </p:dialog>   

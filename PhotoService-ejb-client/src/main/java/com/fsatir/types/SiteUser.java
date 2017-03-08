@@ -49,9 +49,7 @@ public class SiteUser implements Serializable {
     @Transient
     private String passwordMatch;
     
-    @OneToMany(mappedBy = "siteUser",fetch = FetchType.EAGER)
-    private List<Media> mediaList;
-
+    
     
     public SiteUser(String id, String userName, String firstName, String lastName, String email, String mobilePhone) {
         this.id = id;
@@ -139,15 +137,6 @@ public class SiteUser implements Serializable {
         this.passwordMatch = passwordMatch;
     }
 
-    public List<Media> getMediaList() {
-        return mediaList;
-    }
-
-    public void setMediaList(List<Media> mediaList) {
-        this.mediaList = mediaList;
-    }
-    
-    
     
     
 

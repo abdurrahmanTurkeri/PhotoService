@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,10 +97,14 @@ public class MediaManagedBean implements Serializable {
             media.setShareCount(1);
             SiteUser siteUser=(SiteUser)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("siteUser");
             media.setSiteUser(siteUser);
+            media.setInsertDate(new Date());
             mediaService.saveMedia(media);
             mediaList = mediaService.listOfMedia();
+            media=new Media();
+            
         } catch (Exception ex) {
             Logger.getLogger(MediaManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
     }

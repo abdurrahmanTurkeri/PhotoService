@@ -53,7 +53,7 @@ public class LoginManagedBean {
             SecurityUtils.getSubject().login(new UsernamePasswordToken(siteUser.getUserName(), siteUser.getPassword(),false));
             SiteUser siteUserFromDb= userService.loadUser(siteUser.getUserName(), siteUser.getPassword());
             SecurityUtils.getSubject().getSession().setAttribute("siteUser", siteUserFromDb);
-           FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("siteUser",siteUser);
+           FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("siteUser",siteUserFromDb);
             SavedRequest savedRequest = WebUtils.getAndClearSavedRequest(
                      (ServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest());
             FacesContext.getCurrentInstance().getExternalContext().redirect(savedRequest != null ? savedRequest.getRequestUrl() : HOME_URL_WELCOME);
