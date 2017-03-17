@@ -17,6 +17,8 @@ public interface MediaService {
     
     public List<Media> listOfMediaByCategory(String categoryId) throws Exception;
     
+    public List<Media> listOfMediaBySource(String source) throws Exception;
+    
     public Media getMediaDetail(String mediaId) throws Exception;
     
     public Media saveMedia(Media media) throws Exception;
