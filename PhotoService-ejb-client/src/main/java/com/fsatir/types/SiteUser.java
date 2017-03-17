@@ -65,7 +65,7 @@ public class SiteUser implements Serializable {
         this.email = email;
         this.mobilePhone = mobilePhone;
     }
-
+    
     public SiteUser(String id) {
         this.id = id;
     }
