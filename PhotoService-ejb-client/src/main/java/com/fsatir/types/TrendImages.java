@@ -6,6 +6,7 @@
 package com.fsatir.types;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import org.hibernate.annotations.GenericGenerator;
@@ -30,6 +33,7 @@ public class TrendImages implements Serializable{
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     
+    private Long tweetID;
     private String user_screenName;
     private int retweet_count;
     private int favorite_count;
@@ -37,14 +41,25 @@ public class TrendImages implements Serializable{
     private String trendName;
     private byte [] trendImg;
     
+    
+    
     //***
-    @OneToOne(mappedBy = "trendImages",cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "trendImages")
     private Media media;
     
     public TrendImages() {
 
     }
 
+    public Long getTweetID() {
+        return tweetID;
+    }
+
+    public void setTweetID(Long tweetID) {
+        this.tweetID = tweetID;
+    }
+    
+    
     public Media getMedia() {
         return media;
     }
@@ -52,9 +67,7 @@ public class TrendImages implements Serializable{
     public void setMedia(Media media) {
         this.media = media;
     }
-    
-    
-    
+
 
     public byte[] getTrendImg() {
         return trendImg;
