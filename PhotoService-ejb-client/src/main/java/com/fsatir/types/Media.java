@@ -66,12 +66,26 @@ public class Media implements Serializable {
     */
     private String source;
     
+    
+    /*
+        Twitter sonuçlarını tutmak için gerekli alanlar
+    */
+    
+    private Long tweetID;
+    private int retweet_count;
+    private int favorite_count;
+    private String trendImgURL;
+    private String trendName;
+    
+    
+    
     //***
-    @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER , targetEntity = TrendImages.class )
-    private TrendImages trendImages;
+    //@OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER , targetEntity = TrendImages.class )
+    //private TrendImages trendImages;
     
     @ManyToMany(targetEntity = PhotoCategory.class, fetch = FetchType.EAGER)
     private List<PhotoCategory> categoryList;
+    
     
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private SiteUser siteUser;
@@ -156,14 +170,6 @@ public class Media implements Serializable {
         this.source = source;
     }
 
-    public TrendImages getTrendImages() {
-        return trendImages;
-    }
-
-    public void setTrendImages(TrendImages trendImages) {
-        this.trendImages = trendImages;
-    }
-
     public Integer getLikeCount() {
         return likeCount;
     }
@@ -188,10 +194,44 @@ public class Media implements Serializable {
         this.insertDate = insertDate;
     }
 
-   
-    
-    
-    
-    
+    public Long getTweetID() {
+        return tweetID;
+    }
+
+    public void setTweetID(Long tweetID) {
+        this.tweetID = tweetID;
+    }
+
+    public int getRetweet_count() {
+        return retweet_count;
+    }
+
+    public void setRetweet_count(int retweet_count) {
+        this.retweet_count = retweet_count;
+    }
+
+    public int getFavorite_count() {
+        return favorite_count;
+    }
+
+    public void setFavorite_count(int favorite_count) {
+        this.favorite_count = favorite_count;
+    }
+
+    public String getTrendImgURL() {
+        return trendImgURL;
+    }
+
+    public void setTrendImgURL(String trendImgURL) {
+        this.trendImgURL = trendImgURL;
+    }
+
+    public String getTrendName() {
+        return trendName;
+    }
+
+    public void setTrendName(String trendName) {
+        this.trendName = trendName;
+    }
 
 }

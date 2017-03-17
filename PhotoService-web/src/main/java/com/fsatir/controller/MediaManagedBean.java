@@ -11,13 +11,13 @@ import com.fsatir.statics.QuestionSourceTypes;
 import com.fsatir.types.Media;
 import com.fsatir.types.PhotoCategory;
 import com.fsatir.types.SiteUser;
-import com.fsatir.types.TrendImages;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -66,7 +66,6 @@ public class MediaManagedBean implements Serializable {
     private UploadedFile uploadedFile;
     private List<PhotoCategory> categoryList;
     private List<PhotoCategory> selectedCategoryList = new ArrayList<>();
-    private TrendImages trendImages = new TrendImages();
     
     
     /**
@@ -89,10 +88,10 @@ public class MediaManagedBean implements Serializable {
     public void saveMedia() {
         try {            
             media.setCategoryList(selectedCategoryList);
-            media.setTrendImages(trendImages);
             media.setSource(QuestionSourceTypes.FROM_ADMIN.getSourceType());
-            media.setLikeCount(1);
-            media.setShareCount(1);
+            media.setLikeCount(0);
+            media.setShareCount(0);
+            media.setTweetID(Long.valueOf(Calendar.getInstance().get(Calendar.MILLISECOND)));
             SiteUser siteUser=(SiteUser)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("siteUser");
             media.setSiteUser(siteUser);
             media.setInsertDate(new Date());
