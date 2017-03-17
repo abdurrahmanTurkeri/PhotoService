@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -139,7 +140,8 @@ public class TwitterManagedBean implements Serializable {
                         if(trendImages.getTrendImgURL() != null)
                             {
                                 Media media=new Media();
-                                                                
+                                
+                                trendImages.setTweetID(status.getId());
                                 trendImages.setFavorite_count(status.getFavoriteCount());
                                 trendImages.setRetweet_count(status.getRetweetCount());
                                 trendImages.setUser_screenName(status.getUser().getScreenName());
@@ -155,7 +157,7 @@ public class TwitterManagedBean implements Serializable {
                             }
                     }
                }
-                while ((query = result.nextQuery()) != null);
+                while ((query = result.nextQuery()) != null && result.getRateLimitStatus().getRemaining() > 0);
 
         } 
             catch (TwitterException e) 
@@ -233,10 +235,11 @@ public class TwitterManagedBean implements Serializable {
             for(Media localMedia : selectedTrendImagesList)
             {                               
                 byte [] arr = fetchImageFromURL(localMedia.getTrendImages().getTrendImgURL());
-                localMedia.getTrendImages().setTrendImg(arr);
+            //    localMedia.getTrendImages().setTrendImg(arr);
                 localMedia.setMediaData(arr);
                 localMedia.setSource(QuestionSourceTypes.FROM_TWITTER.getSourceType());
                 localMedia.setSiteUser(siteUser);
+                localMedia.setInsertDate(new Date());
                 mediaService.saveMedia(localMedia);
             }
              showMessage("Trend sonuçları veritabanına kaydedildi.");             

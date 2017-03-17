@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -71,6 +72,41 @@ public class MediaRsController {
             return null;
         }
     }
+    
+    
+    @GET
+    @Path("/media/list")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public MediaContainer getAllMediaList(){
+    
+        try {
+            List<Media> result = mediaService.listOfMedia();
+            MediaContainer mc = new MediaContainer();   
+            mc.setMediaList(result);
+            return mc;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    
+    @GET
+    @Path("/media/list/{source}")
+    @Produces(MediaType.APPLICATION_JSON+ ";charset=utf-8")
+    public MediaContainer getMediaListBySource(@PathParam("source") String source) 
+    {
+        try {
+            List<Media> result = mediaService.listOfMediaBySource(source);
+            MediaContainer mc = new MediaContainer();   
+            mc.setMediaList(result);
+            return mc;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
 
     @GET
     @Path("/media/detail/{param}")
@@ -93,7 +129,8 @@ public class MediaRsController {
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) {
         //Your local disk path where you want to store the file
-        String uploadedFileLocation = "/Users/abdurrahmanturkeri/temp/" + fileDetail.getFileName();
+  //    String uploadedFileLocation = "/Users/abdurrahmanturkeri/temp/" + fileDetail.getFileName();
+        String uploadedFileLocation = "/uploads" + fileDetail.getFileName();
         System.out.println(uploadedFileLocation);
         // save it
         File objFile = new File(uploadedFileLocation);

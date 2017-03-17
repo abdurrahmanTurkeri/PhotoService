@@ -7,11 +7,13 @@ package com.fsatir.rest.controller;
 
 import com.fsatir.types.Media;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author AKIN
  */
+@XmlRootElement
 public class MediaContainer {
     private List<Media> mediaList;
 

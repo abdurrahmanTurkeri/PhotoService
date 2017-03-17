@@ -14,11 +14,12 @@
         <h:form id="insertForm" enctype="multipart/form-data">
         <p:dataTable resizableColumns="true" id="fileList" var="trendImage" 
                      value="#{twitterManagedBean.trendImagesListFiltered}"
-                     rowKey="#{trendImage.trendImages.trendName}"
+                     rowKey="#{trendImage.trendImages.tweetID}"
                      selection="#{twitterManagedBean.selectedTrendImagesList}">
            
             
             <p:column selectionMode="multiple" style="width: 3%;text-align: center;"></p:column>
+            <p:column headerText="ID" width="60">#{trendImage.trendImages.tweetID}</p:column>
             <p:column headerText="Favori" width="60">#{trendImage.trendImages.favorite_count}</p:column>
             <p:column headerText="Retweet" width="60">#{trendImage.trendImages.retweet_count}</p:column>
             <p:column headerText="İmaj" width="60"  style="text-align: center" >

@@ -7,6 +7,7 @@ package com.fsatir.controller;
 
 import com.fsatir.service.MediaService;
 import com.fsatir.service.PhotoCategoryService;
+import com.fsatir.statics.QuestionSourceTypes;
 import com.fsatir.types.Media;
 import com.fsatir.types.PhotoCategory;
 import com.fsatir.types.SiteUser;
@@ -65,9 +66,6 @@ public class MediaManagedBean implements Serializable {
     private UploadedFile uploadedFile;
     private List<PhotoCategory> categoryList;
     private List<PhotoCategory> selectedCategoryList = new ArrayList<>();
-    public static final String SOURCE_CAPSAPP = "CAPSAPP";
-    public static final String SOURCE_ADMIN = "ADMIN";    
-    public static final String SOURCE_TWITTER = "TWITTER";
     private TrendImages trendImages = new TrendImages();
     
     
@@ -92,7 +90,7 @@ public class MediaManagedBean implements Serializable {
         try {            
             media.setCategoryList(selectedCategoryList);
             media.setTrendImages(trendImages);
-            media.setSource(SOURCE_ADMIN);
+            media.setSource(QuestionSourceTypes.FROM_ADMIN.getSourceType());
             media.setLikeCount(1);
             media.setShareCount(1);
             SiteUser siteUser=(SiteUser)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("siteUser");
