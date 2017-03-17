@@ -5,6 +5,7 @@
  */
 package com.fsatir.types;
 
+import com.fsatir.statics.TwitterInfos;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -64,7 +67,7 @@ public class Media implements Serializable {
     private String source;
     
     //***
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = TrendImages.class,fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER , targetEntity = TrendImages.class )
     private TrendImages trendImages;
     
     @ManyToMany(targetEntity = PhotoCategory.class, fetch = FetchType.EAGER)
