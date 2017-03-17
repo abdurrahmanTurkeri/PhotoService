@@ -43,6 +43,27 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
         return mediaList;
     }
 
+    
+    @Override
+    public List<Media> listOfMediaBySource(String source) throws Exception {
+        List<Media> mediaList = new ArrayList<>();
+        try {
+            entityManager = accessEntityManager();
+            if(!entityManager.getTransaction().isActive()){
+                 entityManager.getTransaction().begin();
+             }
+            Query q = entityManager.createQuery("from Media m where m.source=:param1");
+            q.setParameter("param1", source);
+            mediaList = (List<Media>) q.getResultList();
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }        
+        return mediaList;
+    }
+    
+    
     @Override
     public List<Media> listOfMediaByCategory(String categoryId) throws Exception {
 
@@ -120,7 +141,6 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
         entityManager.getTransaction().commit();
         entityManager.close();        
    }
-
-    
+  
 
 }
