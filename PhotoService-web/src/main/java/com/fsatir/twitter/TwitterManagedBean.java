@@ -140,7 +140,6 @@ public class TwitterManagedBean implements Serializable {
                                 //myMedia.setTrendImgURL(status.getMediaEntities()[0].getMediaURLHttps());
                                 myMedia.setTrendName(trendName);
                                 myMedia.setName(Long.toString(status.getId()));
-                                myMedia.setMediaRowNo(status.getId());
                                 myMedia.setType(status.getMediaEntities()[0].getType());  
                                 
                                 myMediaList.add(counter++,myMedia);

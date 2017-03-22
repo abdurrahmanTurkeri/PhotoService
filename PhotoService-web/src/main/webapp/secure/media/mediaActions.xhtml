@@ -55,15 +55,7 @@
                     </div>
                 </div>
             
-            <div class="formRowBasic width70">
-                    <div class="formLabel width40">        
-                        <p:outputLabel id="rowLabel" for="rowInput" value="Sıra No  "/>
-                    </div>
-                    <div class="formInput width50">
-                        <p:inputText placeholder="Sıra numarası giriniz" value="#{mediaManagedBean.media.mediaRowNo}" 
-                                     id="rowInput" />
-                    </div>
-                </div>
+       
 
                 <div class="formRowBasic width70">
                     <div class="formLabel width40">        
@@ -97,7 +89,6 @@
             
             <p:column selectionMode="multiple" style="width: 3%;text-align: center;"></p:column>
             <p:column headerText="ID" style="width:10%;">#{media.id}</p:column>
-            <p:column headerText="Sıra" style="width:10%;">#{media.mediaRowNo}</p:column>
             <p:column headerText="Dosya İsmi">#{media.name}</p:column>
             <p:column headerText="Dosya Tipi  ">#{media.type}</p:column>
             

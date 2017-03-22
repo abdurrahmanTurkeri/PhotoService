@@ -45,8 +45,6 @@ public class Media implements Serializable {
     
     private String name;
     
-    private Long mediaRowNo;
-    
     /*
         Number of likes by CapsApp users
     */
@@ -152,14 +150,6 @@ public class Media implements Serializable {
 
     public void setSiteUser(SiteUser siteUser) {
         this.siteUser = siteUser;
-    }
-
-    public Long getMediaRowNo() {
-        return mediaRowNo;
-    }
-
-    public void setMediaRowNo(Long mediaRowNo) {
-        this.mediaRowNo = mediaRowNo;
     }
 
     public String getSource() {

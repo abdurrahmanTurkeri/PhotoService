@@ -147,7 +147,7 @@ public class MediaManagedBean implements Serializable {
     */
     public void handleFileUpload(FileUploadEvent event) throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
-        // fileUploadListener ile gelen dosyayı UploadedFile nesnesi atıyoruz.
+    //  fileUploadListener ile gelen dosyayı UploadedFile nesnesi atıyoruz.
         UploadedFile file = event.getFile();
         byte[] foto = IOUtils.toByteArray(file.getInputstream());
         
