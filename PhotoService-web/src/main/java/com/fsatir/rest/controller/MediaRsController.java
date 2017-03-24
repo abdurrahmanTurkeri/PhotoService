@@ -73,6 +73,28 @@ public class MediaRsController {
         }
     }
     
+    @GET
+    @Path("/media/list/category/label/{param}/{noDetail}")
+    @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    public MediaContainer getMediaListByCategoryLabel(@PathParam("param") String categoryLabel,
+            @PathParam("noDetail") String noDetail) 
+    {
+        try {
+            List<Media> result = null;
+            MediaContainer mc = new MediaContainer();     
+            if (noDetail != null && noDetail.equals("true")) {
+
+            } else {
+                result = mediaService.listOfMediaByCategoryLabel(categoryLabel);
+                mc.setMediaList(result);
+            }
+            return mc;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
     
     @GET
     @Path("/media/list")

@@ -141,6 +141,46 @@ public class MediaServiceImpl extends BaseServiceImpl implements MediaService {
         entityManager.getTransaction().commit();
         entityManager.close();        
    }
+
+    @Override
+    public List<Media> listOfMediaByCategoryLabel(String categoryLabel) throws Exception {
+       
+        List<Media> mediaList = new ArrayList<>();
+        List<Media> mediaListReturn = new ArrayList<>();
+        PhotoCategory category = null;
+        int i = 0;
+        try {
+            entityManager = accessEntityManager();
+            if(!entityManager.getTransaction().isActive()){
+                 entityManager.getTransaction().begin();
+             }            
+            
+            Query q = entityManager.createQuery("from PhotoCategory p where p.label=:param1");
+            q.setParameter("param1", categoryLabel);
+            category = (PhotoCategory) q.getSingleResult();
+         
+            
+            mediaList = entityManager.createQuery("from Media").getResultList();
+       
+            for(Media m : mediaList)
+            { 
+               if(m.getCategoryList().contains(category))
+               {
+                     mediaListReturn.add(m);
+               }          
+               i++;
+            }
+            entityManager.getTransaction().commit();
+            entityManager.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return mediaListReturn;        
+    }
+
+  
+  
   
 
 }
